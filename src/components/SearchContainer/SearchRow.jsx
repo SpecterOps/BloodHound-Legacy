@@ -46,6 +46,12 @@ const SearchRow = ({ item, search }) => {
         case 'Container':
             icon.className = 'fa fa-box'
             break
+        case 'IPAUser':
+            icon.className = 'fa fa-user';
+            break;
+        case 'IPAComputer':
+            icon.className = 'fa fa-desktop';
+            break;
         case 'AZUser':
             icon.className = 'fa fa-user';
             break;

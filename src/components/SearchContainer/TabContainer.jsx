@@ -8,6 +8,8 @@ import ComputerNodeData from './Tabs/ComputerNodeData';
 import DomainNodeData from './Tabs/DomainNodeData';
 import GpoNodeData from './Tabs/GPONodeData';
 import OuNodeData from './Tabs/OUNodeData';
+import IPAUserNodeData from './Tabs/IPAUserNodeData';
+import IPAComputerNodeData from './Tabs/IPAHostNodeData';
 import AZGroupNodeData from './Tabs/AZGroupNodeData';
 import AZUserNodeData from './Tabs/AZUserNodeData';
 import AZContainerRegistryNodeData from './Tabs/AZContainerRegistryNodeData';
@@ -49,6 +51,8 @@ class TabContainer extends Component {
             gpoVisible: false,
             ouVisible: false,
             containerVisible: false,
+            IPAuserVisible: false,
+            IPAcomputerVisible: false,
             azGroupVisible: false,
             azUserVisible: false,
             azContainerRegistryVisible: false,
@@ -94,6 +98,10 @@ class TabContainer extends Component {
             this._ouNodeClicked();
         } else if (type === 'GPO') {
             this._gpoNodeClicked();
+        } else if (type === 'IPAComputer') {
+            this._computerNodeClicked();
+        } else if (type === 'IPAUser') {
+            this._computerNodeClicked();
         } else if (type === 'AZGroup') {
             this._azGroupNodeClicked();
         } else if (type === 'AZUser') {
@@ -221,6 +229,23 @@ class TabContainer extends Component {
         this.clearVisible()
         this.setState({
             ouVisible: true,
+            selected: 2
+        });
+    }
+
+
+    _IPAuserNodeClicked() {
+        this.clearVisible()
+        this.setState({
+            userVisible: true,
+            selected: 2
+        });
+    }
+
+    _IPAcomputerNodeClicked() {
+        this.clearVisible()
+        this.setState({
+            computerVisible: true,
             selected: 2
         });
     }
@@ -405,6 +430,8 @@ class TabContainer extends Component {
                                 !this.state.domainVisible &&
                                 !this.state.gpoVisible &&
                                 !this.state.ouVisible &&
+                                !this.state.IPAuserVisible &&
+                                !this.state.IPAcomputerVisible &&
                                 !this.state.azGroupVisible &&
                                 !this.state.azUserVisible &&
                                 !this.state.azContainerRegistryVisible &&
@@ -437,6 +464,8 @@ class TabContainer extends Component {
                         <GpoNodeData visible={this.state.gpoVisible} />
                         <OuNodeData visible={this.state.ouVisible} />
                         <ContainerNodeData visible={this.state.containerVisible} />
+                        <IPAComputerNodeData visible={this.state.IPAcomputerVisible} />
+                        <IPAUserNodeData visible={this.state.IPAuserVisible} />
                         <AZGroupNodeData visible={this.state.azGroupVisible} />
                         <AZUserNodeData visible={this.state.azUserVisible} />
                         <AZContainerRegistryNodeData visible={this.state.azContainerRegistryVisible} />
