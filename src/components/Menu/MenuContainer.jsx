@@ -37,7 +37,7 @@ const IngestFuncMap = {
     ous: NewIngestion.buildOuJsonNew,
     gpos: NewIngestion.buildGpoJsonNew,
     containers: NewIngestion.buildContainerJsonNew,
-    IPAcomputers: NewIngestion.buildIPAComputerJsonNew,
+    IPAhosts: NewIngestion.buildIPAHostJsonNew,
     IPAusers: NewIngestion.buildIPAUserJsonNew,
     azure: NewIngestion.convertAzureData,
 };

@@ -49,7 +49,7 @@ const SearchRow = ({ item, search }) => {
         case 'IPAUser':
             icon.className = 'fa fa-user';
             break;
-        case 'IPAComputer':
+        case 'IPAHost':
             icon.className = 'fa fa-desktop';
             break;
         case 'AZUser':

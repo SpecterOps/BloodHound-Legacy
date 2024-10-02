@@ -11,7 +11,7 @@ import { Table } from 'react-bootstrap';
 import styles from './NodeData.module.css';
 import { AppContext } from '../../../AppContext';
 
-const IPAComputerNodeData = () => {
+const IPAHostNodeData = () => {
     const [visible, setVisible] = useState(false);
     const [objectid, setObjectid] = useState(null);
     const [label, setLabel] = useState(null);
@@ -28,14 +28,14 @@ const IPAComputerNodeData = () => {
     }, []);
 
     const nodeClickEvent = (type, id, blocksinheritance, domain) => {
-        if (type === 'IPAComputer') {
+        if (type === 'IPAHost') {
             setVisible(true);
             setObjectid(id);
             setDomain(domain);
             let session = driver.session();
             session
                 .run(
-                    `MATCH (n:IPAComputer {objectid: $objectid}) RETURN n AS node`,
+                    `MATCH (n:IPAHost {objectid: $objectid}) RETURN n AS node`,
                     {
                         objectid: id,
                     }
@@ -85,7 +85,7 @@ const IPAComputerNodeData = () => {
                                     property='Sessions'
                                     target={objectid}
                                     baseQuery={
-                                        "MATCH p=(m:IPAComputer {objectid: $objectid})-[r:HasSession]->(n:User) WHERE NOT n.objectid ENDS WITH '$'"
+                                        "MATCH p=(m:IPAHost {objectid: $objectid})-[r:HasSession]->(n:User) WHERE NOT n.objectid ENDS WITH '$'"
                                     }
                                     start={label}
                                     distinct
@@ -94,7 +94,7 @@ const IPAComputerNodeData = () => {
                                     property='Reachable High Value Targets'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH (m:IPAComputer {objectid: $objectid}),(n {highvalue:true}),p=shortestPath((m)-[r*1..]->(n)) WHERE NONE (r IN relationships(p) WHERE type(r)= "GetChanges") AND NONE (r in relationships(p) WHERE type(r)="GetChangesAll") AND NOT m=n'
+                                        'MATCH (m:IPAHost {objectid: $objectid}),(n {highvalue:true}),p=shortestPath((m)-[r*1..]->(n)) WHERE NONE (r IN relationships(p) WHERE type(r)= "GetChanges") AND NONE (r in relationships(p) WHERE type(r)="GetChangesAll") AND NOT m=n'
                                     }
                                     start={label}
                                 />
@@ -102,26 +102,26 @@ const IPAComputerNodeData = () => {
                                     property='Sibling Objects in the Same OU'
                                     target={objectid}
                                     countQuery={
-                                        'MATCH (o1)-[r1:Contains]->(o2:IPAComputer {objectid: $objectid}) WITH o1 OPTIONAL MATCH p1=(d)-[r2:Contains*1..]->(o1) OPTIONAL MATCH p2=(o1)-[r3:Contains]->(n) WHERE n:User OR n:IPAComputer RETURN count(distinct(n))'
+                                        'MATCH (o1)-[r1:Contains]->(o2:IPAHost {objectid: $objectid}) WITH o1 OPTIONAL MATCH p1=(d)-[r2:Contains*1..]->(o1) OPTIONAL MATCH p2=(o1)-[r3:Contains]->(n) WHERE n:User OR n:IPAHost RETURN count(distinct(n))'
                                     }
                                     graphQuery={
-                                        'MATCH (o1)-[r1:Contains]->(o2:IPAComputer {objectid: $objectid}) WITH o1 OPTIONAL MATCH p1=(d)-[r2:Contains*1..]->(o1) OPTIONAL MATCH p2=(o1)-[r3:Contains]->(n) WHERE n:User OR n:IPAComputer RETURN p1,p2'
+                                        'MATCH (o1)-[r1:Contains]->(o2:IPAHost {objectid: $objectid}) WITH o1 OPTIONAL MATCH p1=(d)-[r2:Contains*1..]->(o1) OPTIONAL MATCH p2=(o1)-[r3:Contains]->(n) WHERE n:User OR n:IPAHost RETURN p1,p2'
                                     }
                                 />
                                 <NodeCypherLinkComplex
                                     property='Effective Inbound GPOs'
                                     target={objectid}
                                     countQuery={
-                                        'MATCH (c:IPAComputer {objectid: $objectid}) OPTIONAL MATCH p1 = (g1:GPO)-[r1:GPLink {enforced:true}]->(container1)-[r2:Contains*1..]->(c) OPTIONAL MATCH p2 = (g2:GPO)-[r3:GPLink {enforced:false}]->(container2)-[r4:Contains*1..]->(c) WHERE NONE (x in NODES(p2) WHERE x.blocksinheritance = true AND x:OU AND NOT (g2)-->(x)) WITH COLLECT(g1) + COLLECT(g2) AS tempVar UNWIND tempVar AS GPOs RETURN COUNT(DISTINCT(GPOs))'
+                                        'MATCH (c:IPAHost {objectid: $objectid}) OPTIONAL MATCH p1 = (g1:GPO)-[r1:GPLink {enforced:true}]->(container1)-[r2:Contains*1..]->(c) OPTIONAL MATCH p2 = (g2:GPO)-[r3:GPLink {enforced:false}]->(container2)-[r4:Contains*1..]->(c) WHERE NONE (x in NODES(p2) WHERE x.blocksinheritance = true AND x:OU AND NOT (g2)-->(x)) WITH COLLECT(g1) + COLLECT(g2) AS tempVar UNWIND tempVar AS GPOs RETURN COUNT(DISTINCT(GPOs))'
                                     }
                                     graphQuery={
-                                        'MATCH (c:IPAComputer {objectid: $objectid}) OPTIONAL MATCH p1 = (g1:GPO)-[r1:GPLink {enforced:true}]->(container1)-[r2:Contains*1..]->(c) OPTIONAL MATCH p2 = (g2:GPO)-[r3:GPLink {enforced:false}]->(container2)-[r4:Contains*1..]->(c) WHERE NONE (x in NODES(p2) WHERE x.blocksinheritance = true AND x:OU AND NOT (g2)-->(x)) RETURN p1,p2'
+                                        'MATCH (c:IPAHost {objectid: $objectid}) OPTIONAL MATCH p1 = (g1:GPO)-[r1:GPLink {enforced:true}]->(container1)-[r2:Contains*1..]->(c) OPTIONAL MATCH p2 = (g2:GPO)-[r3:GPLink {enforced:false}]->(container2)-[r4:Contains*1..]->(c) WHERE NONE (x in NODES(p2) WHERE x.blocksinheritance = true AND x:OU AND NOT (g2)-->(x)) RETURN p1,p2'
                                     }
                                 />
                                 <NodeCypherNoNumberLink
                                     target={objectid}
                                     property='See Computer within Domain/OU Tree'
-                                    query='MATCH p = (d:Domain)-[r:Contains*1..]->(u:IPAComputer {objectid: $objectid}) RETURN p'
+                                    query='MATCH p = (d:Domain)-[r:Contains*1..]->(u:IPAHost {objectid: $objectid}) RETURN p'
                                 />
                             </tbody>
                         </Table>
@@ -148,7 +148,7 @@ const IPAComputerNodeData = () => {
                                     property='Explicit Admins'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH p=(n)-[b:AdminTo]->(c:IPAComputer {objectid: $objectid})'
+                                        'MATCH p=(n)-[b:AdminTo]->(c:IPAHost {objectid: $objectid})'
                                     }
                                     end={label}
                                 />
@@ -156,7 +156,7 @@ const IPAComputerNodeData = () => {
                                     property='Unrolled Admins'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH p=(n)-[r:MemberOf|AdminTo*1..]->(m:IPAComputer {objectid: $objectid}) WHERE NOT n:Group'
+                                        'MATCH p=(n)-[r:MemberOf|AdminTo*1..]->(m:IPAHost {objectid: $objectid}) WHERE NOT n:Group'
                                     }
                                     end={label}
                                     distinct
@@ -165,17 +165,17 @@ const IPAComputerNodeData = () => {
                                     property='Foreign Admins'
                                     target={objectid}
                                     countQuery={
-                                        'MATCH (c:IPAComputer {objectid: $objectid}) OPTIONAL MATCH (u1)-[:AdminTo]->(c) WHERE NOT u1.domain = c.domain WITH u1,c OPTIONAL MATCH (u2)-[:MemberOf*1..]->(:Group)-[:AdminTo]->(c) WHERE NOT u2.domain = c.domain WITH COLLECT(u1) + COLLECT(u2) as tempVar,c UNWIND tempVar as principals RETURN COUNT(DISTINCT(principals))'
+                                        'MATCH (c:IPAHost {objectid: $objectid}) OPTIONAL MATCH (u1)-[:AdminTo]->(c) WHERE NOT u1.domain = c.domain WITH u1,c OPTIONAL MATCH (u2)-[:MemberOf*1..]->(:Group)-[:AdminTo]->(c) WHERE NOT u2.domain = c.domain WITH COLLECT(u1) + COLLECT(u2) as tempVar,c UNWIND tempVar as principals RETURN COUNT(DISTINCT(principals))'
                                     }
                                     graphQuery={
-                                        'MATCH (c:IPAComputer {objectid: $objectid}) OPTIONAL MATCH p1 = (u1)-[:AdminTo]->(c) WHERE NOT u1.domain = c.domain WITH p1,c OPTIONAL MATCH p2 = (u2)-[:MemberOf*1..]->(:Group)-[:AdminTo]->(c) WHERE NOT u2.domain = c.domain RETURN p1,p2'
+                                        'MATCH (c:IPAHost {objectid: $objectid}) OPTIONAL MATCH p1 = (u1)-[:AdminTo]->(c) WHERE NOT u1.domain = c.domain WITH p1,c OPTIONAL MATCH p2 = (u2)-[:MemberOf*1..]->(:Group)-[:AdminTo]->(c) WHERE NOT u2.domain = c.domain RETURN p1,p2'
                                     }
                                 />
                                 <NodePlayCypherLink
                                     property='Derivative Local Admins'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH (n) WHERE NOT n.objectid=$objectid WITH n MATCH p = shortestPath((n)-[r:AdminTo|MemberOf|HasSession*1..]->(m:IPAComputer {objectid: $objectid}))'
+                                        'MATCH (n) WHERE NOT n.objectid=$objectid WITH n MATCH p = shortestPath((n)-[r:AdminTo|MemberOf|HasSession*1..]->(m:IPAHost {objectid: $objectid}))'
                                     }
                                     end={label}
                                     distinct
@@ -194,7 +194,7 @@ const IPAComputerNodeData = () => {
                                     property='First Degree Remote Desktop Users'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH p=(n)-[r:CanRDP]->(m:IPAComputer {objectid: $objectid})'
+                                        'MATCH p=(n)-[r:CanRDP]->(m:IPAHost {objectid: $objectid})'
                                     }
                                     end={label}
                                     distinct
@@ -203,7 +203,7 @@ const IPAComputerNodeData = () => {
                                     property='Group Delegated Remote Desktop Users'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH p=(n)-[r1:MemberOf*1..]->(g:Group)-[r:CanRDP]->(m:IPAComputer {objectid: $objectid})'
+                                        'MATCH p=(n)-[r1:MemberOf*1..]->(g:Group)-[r:CanRDP]->(m:IPAHost {objectid: $objectid})'
                                     }
                                     end={label}
                                     distinct
@@ -212,7 +212,7 @@ const IPAComputerNodeData = () => {
                                     property='First Degree Distributed COM Users'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH p=(n)-[r:ExecuteDCOM]->(m:IPAComputer {objectid: $objectid})'
+                                        'MATCH p=(n)-[r:ExecuteDCOM]->(m:IPAHost {objectid: $objectid})'
                                     }
                                     end={label}
                                     distinct
@@ -221,7 +221,7 @@ const IPAComputerNodeData = () => {
                                     property='Group Delegated Distributed COM Users'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH p=(n)-[r1:MemberOf*1..]->(g:Group)-[r:ExecuteDCOM]->(m:IPAComputer {objectid: $objectid})'
+                                        'MATCH p=(n)-[r1:MemberOf*1..]->(g:Group)-[r:ExecuteDCOM]->(m:IPAHost {objectid: $objectid})'
                                     }
                                     end={label}
                                     distinct
@@ -230,7 +230,7 @@ const IPAComputerNodeData = () => {
                                     property='SQL Admins'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH p=(n:User)-[r:SQLAdmin]->(m:IPAComputer {objectid: $objectid})'
+                                        'MATCH p=(n:User)-[r:SQLAdmin]->(m:IPAHost {objectid: $objectid})'
                                     }
                                     start={label}
                                     distinct
@@ -249,7 +249,7 @@ const IPAComputerNodeData = () => {
                                     property='First Degree Group Membership'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH (m:IPAComputer {objectid: $objectid}),(n:Group), p=(m)-[r:MemberOf]->(n)'
+                                        'MATCH (m:IPAHost {objectid: $objectid}),(n:Group), p=(m)-[r:MemberOf]->(n)'
                                     }
                                     start={label}
                                 />
@@ -257,7 +257,7 @@ const IPAComputerNodeData = () => {
                                     property='Unrolled Group Membership'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH p=(c:IPAComputer {objectid: $objectid})-[r:MemberOf*1..]->(n:Group)'
+                                        'MATCH p=(c:IPAHost {objectid: $objectid})-[r:MemberOf*1..]->(n:Group)'
                                     }
                                     start={label}
                                     distinct
@@ -266,7 +266,7 @@ const IPAComputerNodeData = () => {
                                     property='Foreign Group Membership'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH p=(c:IPAComputer {objectid: $objectid})-[r:MemberOf*1..]->(n:Group) WHERE NOT n.domain = c.domain'
+                                        'MATCH p=(c:IPAHost {objectid: $objectid})-[r:MemberOf*1..]->(n:Group) WHERE NOT n.domain = c.domain'
                                     }
                                     start={label}
                                     distinct
@@ -285,7 +285,7 @@ const IPAComputerNodeData = () => {
                                     property='First Degree Local Admin'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH (m:IPAComputer {objectid: $objectid}), (n:IPAComputer), p=(m)-[r:AdminTo]->(n)'
+                                        'MATCH (m:IPAHost {objectid: $objectid}), (n:IPAHost), p=(m)-[r:AdminTo]->(n)'
                                     }
                                     start={label}
                                     distinct
@@ -294,7 +294,7 @@ const IPAComputerNodeData = () => {
                                     property='Group Delegated Local Admin'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH p=(m:IPAComputer {objectid: $objectid})-[r1:MemberOf*1..]->(g:Group)-[r2:AdminTo]->(n:IPAComputer) WHERE NOT n.objectid=$objectid'
+                                        'MATCH p=(m:IPAHost {objectid: $objectid})-[r1:MemberOf*1..]->(g:Group)-[r2:AdminTo]->(n:IPAHost) WHERE NOT n.objectid=$objectid'
                                     }
                                     start={label}
                                     distinct
@@ -303,7 +303,7 @@ const IPAComputerNodeData = () => {
                                     property='Derivative Local Admin'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH (m:IPAComputer {objectid: $objectid}), (n:IPAComputer) WHERE NOT n.objectid=$objectid MATCH p=shortestPath((m)-[r:AdminTo|MemberOf*1..]->(n))'
+                                        'MATCH (m:IPAHost {objectid: $objectid}), (n:IPAHost) WHERE NOT n.objectid=$objectid MATCH p=shortestPath((m)-[r:AdminTo|MemberOf*1..]->(n))'
                                     }
                                     start={label}
                                     distinct
@@ -322,7 +322,7 @@ const IPAComputerNodeData = () => {
                                     property='First Degree RDP Privileges'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH p=(m:IPAComputer {objectid: $objectid})-[r:CanRDP]->(n:IPAComputer)'
+                                        'MATCH p=(m:IPAHost {objectid: $objectid})-[r:CanRDP]->(n:IPAHost)'
                                     }
                                     start={label}
                                     distinct
@@ -331,7 +331,7 @@ const IPAComputerNodeData = () => {
                                     property='Group Delegated RDP Privileges'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH p=(m:IPAComputer {objectid: $objectid})-[r1:MemberOf*1..]->(g:Group)-[r2:CanRDP]->(n:IPAComputer)'
+                                        'MATCH p=(m:IPAHost {objectid: $objectid})-[r1:MemberOf*1..]->(g:Group)-[r2:CanRDP]->(n:IPAHost)'
                                     }
                                     start={label}
                                     distinct
@@ -340,7 +340,7 @@ const IPAComputerNodeData = () => {
                                     property='First Degree DCOM Privileges'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH p=(m:IPAComputer {objectid: $objectid})-[r:ExecuteDCOM]->(n:IPAComputer)'
+                                        'MATCH p=(m:IPAHost {objectid: $objectid})-[r:ExecuteDCOM]->(n:IPAHost)'
                                     }
                                     start={label}
                                     distinct
@@ -349,7 +349,7 @@ const IPAComputerNodeData = () => {
                                     property='Group Delegated DCOM Privileges'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH p=(m:IPAComputer {objectid: $objectid})-[r1:MemberOf*1..]->(g:Group)-[r2:ExecuteDCOM]->(n:IPAComputer)'
+                                        'MATCH p=(m:IPAHost {objectid: $objectid})-[r1:MemberOf*1..]->(g:Group)-[r2:ExecuteDCOM]->(n:IPAHost)'
                                     }
                                     start={label}
                                     distinct
@@ -358,7 +358,7 @@ const IPAComputerNodeData = () => {
                                     property='Constrained Delegation Privileges'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH p=(m:IPAComputer {objectid: $objectid})-[r:AllowedToDelegate]->(n:IPAComputer)'
+                                        'MATCH p=(m:IPAHost {objectid: $objectid})-[r:AllowedToDelegate]->(n:IPAHost)'
                                     }
                                     start={label}
                                     distinct
@@ -377,7 +377,7 @@ const IPAComputerNodeData = () => {
                                     property='Explicit Object Controllers'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH p=(n)-[r]->(u1:IPAComputer {objectid:$objectid}) WHERE r.isacl=true'
+                                        'MATCH p=(n)-[r]->(u1:IPAHost {objectid:$objectid}) WHERE r.isacl=true'
                                     }
                                     end={label}
                                     distinct
@@ -386,7 +386,7 @@ const IPAComputerNodeData = () => {
                                     property='Unrolled Object Controllers'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH p=(n)-[r:MemberOf*1..]->(g:Group)-[r1:AddMember|AddSelf|WriteSPN|AddKeyCredentialLink|AllExtendedRights|GenericAll|GenericWrite|WriteDacl|WriteOwner|Owns]->(u:IPAComputer {objectid:$objectid}) WITH LENGTH(p) as pathLength, p, n WHERE NONE (x in NODES(p)[1..(pathLength-1)] WHERE x.objectid = u.objectid) AND NOT n.objectid = u.objectid'
+                                        'MATCH p=(n)-[r:MemberOf*1..]->(g:Group)-[r1:AddMember|AddSelf|WriteSPN|AddKeyCredentialLink|AllExtendedRights|GenericAll|GenericWrite|WriteDacl|WriteOwner|Owns]->(u:IPAHost {objectid:$objectid}) WITH LENGTH(p) as pathLength, p, n WHERE NONE (x in NODES(p)[1..(pathLength-1)] WHERE x.objectid = u.objectid) AND NOT n.objectid = u.objectid'
                                     }
                                     end={label}
                                     distinct
@@ -395,7 +395,7 @@ const IPAComputerNodeData = () => {
                                     property='Transitive Object Controllers'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH (n) WHERE NOT n.objectid=$objectid WITH n MATCH p = shortestPath((n)-[r1:MemberOf|AllExtendedRights|AddSelf|WriteSPN|AddKeyCredentialLink|ForceChangePassword|GenericAll|GenericWrite|WriteDacl|WriteOwner*1..]->(u1:IPAComputer {objectid:$objectid}))'
+                                        'MATCH (n) WHERE NOT n.objectid=$objectid WITH n MATCH p = shortestPath((n)-[r1:MemberOf|AllExtendedRights|AddSelf|WriteSPN|AddKeyCredentialLink|ForceChangePassword|GenericAll|GenericWrite|WriteDacl|WriteOwner*1..]->(u1:IPAHost {objectid:$objectid}))'
                                     }
                                     end={label}
                                     distinct
@@ -414,7 +414,7 @@ const IPAComputerNodeData = () => {
                                     property='First Degree Object Control'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH p = (c:IPAComputer {objectid: $objectid})-[r]->(n) WHERE r.isacl=true'
+                                        'MATCH p = (c:IPAHost {objectid: $objectid})-[r]->(n) WHERE r.isacl=true'
                                     }
                                     start={label}
                                     distinct
@@ -423,7 +423,7 @@ const IPAComputerNodeData = () => {
                                     property='Group Delegated Object Control'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH p = (c:IPAComputer {objectid: $objectid})-[r1:MemberOf*1..]->(g:Group)-[r2]->(n) WHERE r2.isacl=true'
+                                        'MATCH p = (c:IPAHost {objectid: $objectid})-[r1:MemberOf*1..]->(g:Group)-[r2]->(n) WHERE r2.isacl=true'
                                     }
                                     start={label}
                                     distinct
@@ -432,7 +432,7 @@ const IPAComputerNodeData = () => {
                                     property='Transitive Object Control'
                                     target={objectid}
                                     baseQuery={
-                                        'MATCH (n) WHERE NOT n.objectid=$objectid WITH n MATCH p = shortestPath((c:IPAComputer {objectid: $objectid})-[r:MemberOf|AddMember|AddSelf|AllExtendedRights|ForceChangePassword|GenericAll|GenericWrite|WriteDacl|WriteOwner|Owns*1..]->(n))'
+                                        'MATCH (n) WHERE NOT n.objectid=$objectid WITH n MATCH p = shortestPath((c:IPAHost {objectid: $objectid})-[r:MemberOf|AddMember|AddSelf|AllExtendedRights|ForceChangePassword|GenericAll|GenericWrite|WriteDacl|WriteOwner|Owns*1..]->(n))'
                                     }
                                     start={label}
                                     distinct
@@ -441,10 +441,10 @@ const IPAComputerNodeData = () => {
                         </Table>
                     </div>
                 </CollapsibleSection>
-                {/* <Notes objectid={objectid} type='IPAComputer' />
+                {/* <Notes objectid={objectid} type='IPAHost' />
                 <NodeGallery
                     objectid={objectid}
-                    type='IPAComputer'
+                    type='IPAHost'
                     visible={visible}
                 /> */}
             </div>
@@ -452,5 +452,5 @@ const IPAComputerNodeData = () => {
     );
 };
 
-IPAComputerNodeData.propTypes = {};
-export default IPAComputerNodeData;
+IPAHostNodeData.propTypes = {};
+export default IPAHostNodeData;

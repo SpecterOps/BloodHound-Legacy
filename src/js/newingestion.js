@@ -910,197 +910,39 @@ export function buildDomainJsonNew(chunk) {
 
 /**
  *
- * @param {Array.<IPAComputer>} chunk
+ * @param {Array.<IPAHost>} chunk
  * @returns {{}}
  */
-export function buildIPAComputerJsonNew(chunk) {
+export function buildIPAHostJsonNew(chunk) {
     let queries = {};
     queries.properties = {};
-    queries.properties.statement = PROP_QUERY.format(ADLabels.IPAComputer);
+    queries.properties.statement = PROP_QUERY.format(ADLabels.IPAHost);
     queries.properties.props = [];
 
     for (let computer of chunk) {
-        let identifier = computer.ObjectIdentifier;
+        let ipauniqueid = computer.ipauniqueid;
         let properties = computer.Properties;
-        let localAdmins = computer.LocalAdmins.Results;
-        let rdp = computer.RemoteDesktopUsers.Results;
-        let dcom = computer.DcomUsers.Results;
-        let psremote = computer.PSRemoteUsers.Results;
-        let primaryGroup = computer.PrimaryGroupSID;
-        let allowedToAct = computer.AllowedToAct;
-        let allowedToDelegate = computer.AllowedToDelegate;
-        let sessions = computer.Sessions.Results;
-        let privSessions = computer.PrivilegedSessions.Results;
-        let regSessions = computer.RegistrySessions.Results;
+        //let localAdmins = computer.LocalAdmins.Results;
+        //let rdp = computer.RemoteDesktopUsers.Results;
+        //let dcom = computer.DcomUsers.Results;
+        //let psremote = computer.PSRemoteUsers.Results;
+        //let primaryGroup = computer.PrimaryGroupSID;
+        //let allowedToAct = computer.AllowedToAct;
+        //let allowedToDelegate = computer.AllowedToDelegate;
+        //let sessions = computer.Sessions.Results;
+        //let privSessions = computer.PrivilegedSessions.Results;
+        //let regSessions = computer.RegistrySessions.Results;
         let aces = computer.Aces;
-        let dumpSMSAPassword = computer.DumpSMSAPassword;
+        //let dumpSMSAPassword = computer.DumpSMSAPassword;
 
         queries.properties.props.push({
-            objectid: identifier,
+            objectid: ipauniqueid,
             map: properties,
         });
 
-        processAceArrayNew(aces, identifier, ADLabels.IPAComputer, queries);
+        processAceArrayNew(aces, ipauniqueid, ADLabels.IPAHost, queries);
 
-        let format = [
-            ADLabels.IPAComputer,
-            ADLabels.Group,
-            ADLabels.MemberOf,
-            NON_ACL_PROPS,
-        ];
-        if (primaryGroup !== null) {
-            insertNew(queries, format, {
-                source: identifier,
-                target: primaryGroup,
-            });
-        }
 
-        format = [
-            ADLabels.IPAComputer,
-            ADLabels.IPAComputer,
-            ADLabels.AllowedToDelegate,
-            NON_ACL_PROPS,
-        ];
-
-        let props = allowedToDelegate.map((delegate) => {
-            return { source: identifier, target: delegate.ObjectIdentifier };
-        });
-
-        insertNew(queries, format, props);
-
-        format = ['', ADLabels.IPAComputer, ADLabels.AllowedToAct, NON_ACL_PROPS];
-        let grouped = groupBy(allowedToAct, GROUP_OBJECT_TYPE);
-        for (let objectType in grouped) {
-            format[0] = objectType;
-            props = grouped[objectType].map((principal) => {
-                return {
-                    source: principal.ObjectIdentifier,
-                    target: identifier,
-                };
-            });
-            insertNew(queries, format, props);
-        }
-
-        format = [
-            ADLabels.IPAComputer,
-            ADLabels.IPAUser,
-            ADLabels.DumpSMSAPassword,
-            NON_ACL_PROPS,
-        ];
-
-        if (dumpSMSAPassword === undefined)
-            dumpSMSAPassword = [];
-
-        props = dumpSMSAPassword.map((principal) => {
-            return { source: identifier, target: principal.ObjectIdentifier };
-        });
-
-        insertNew(queries, format, props);
-
-        format = [
-            ADLabels.IPAComputer,
-            ADLabels.IPAUser,
-            ADLabels.HasSession,
-            '{isacl:false, source:"netsessionenum"}',
-        ];
-        props = sessions.map((session) => {
-            return { source: session.ComputerSID, target: session.UserSID };
-        });
-        insertNew(queries, format, props);
-
-        format = [
-            ADLabels.IPAComputer,
-            ADLabels.IPAUser,
-            ADLabels.HasSession,
-            '{isacl:false, source:"netwkstauserenum"}',
-        ];
-        props = privSessions.map((session) => {
-            return { source: session.ComputerSID, target: session.UserSID };
-        });
-        insertNew(queries, format, props);
-
-        format = [
-            ADLabels.IPAComputer,
-            ADLabels.IPAUser,
-            ADLabels.HasSession,
-            '{isacl:false, source:"registry"}',
-        ];
-        props = regSessions.map((session) => {
-            return { source: session.ComputerSID, target: session.UserSID };
-        });
-        insertNew(queries, format, props);
-
-        format = [
-            '',
-            ADLabels.IPAComputer,
-            ADLabels.AdminTo,
-            '{isacl:false, fromgpo: false}',
-        ];
-        grouped = groupBy(localAdmins, GROUP_OBJECT_TYPE);
-        for (let objectType in grouped) {
-            format[0] = objectType;
-            props = grouped[objectType].map((principal) => {
-                return {
-                    source: principal.ObjectIdentifier,
-                    target: identifier,
-                };
-            });
-            insertNew(queries, format, props);
-        }
-
-        format = [
-            '',
-            ADLabels.IPAComputer,
-            ADLabels.CanRDP,
-            '{isacl:false, fromgpo: false}',
-        ];
-        grouped = groupBy(rdp, GROUP_OBJECT_TYPE);
-        for (let objectType in grouped) {
-            format[0] = objectType;
-            props = grouped[objectType].map((principal) => {
-                return {
-                    source: principal.ObjectIdentifier,
-                    target: identifier,
-                };
-            });
-            insertNew(queries, format, props);
-        }
-
-        format = [
-            '',
-            ADLabels.IPAComputer,
-            ADLabels.ExecuteDCOM,
-            '{isacl:false, fromgpo: false}',
-        ];
-        grouped = groupBy(dcom, GROUP_OBJECT_TYPE);
-        for (let objectType in grouped) {
-            format[0] = objectType;
-            props = grouped[objectType].map((principal) => {
-                return {
-                    source: principal.ObjectIdentifier,
-                    target: identifier,
-                };
-            });
-            insertNew(queries, format, props);
-        }
-
-        format = [
-            '',
-            ADLabels.IPAComputer,
-            ADLabels.CanPSRemote,
-            '{isacl:false, fromgpo: false}',
-        ];
-        grouped = groupBy(psremote || [], GROUP_OBJECT_TYPE);
-        for (let objectType in grouped) {
-            format[0] = objectType;
-            props = grouped[objectType].map((principal) => {
-                return {
-                    source: principal.ObjectIdentifier,
-                    target: identifier,
-                };
-            });
-            insertNew(queries, format, props);
-        }
     }
     return queries;
 }
@@ -1119,7 +961,7 @@ export function buildIPAUserJsonNew(chunk) {
 
     for (let user of chunk) {
         let properties = user.Properties;
-        let ipantsecurityidentifier = user.ipantsecurityidentifier;
+        let ipauniqueid = user.ipauniqueid;
         //let identifier = user.ObjectIdentifier;
         //let primaryGroup = user.PrimaryGroupSID;
         //let allowedToDelegate = user.AllowedToDelegate;
@@ -1127,10 +969,10 @@ export function buildIPAUserJsonNew(chunk) {
         //let sidHistory = user.HasSIDHistory;
         let aces = user.Aces;
 
-        processAceArrayNew(aces, ipantsecurityidentifier, ADLabels.IPAUser, queries);
+        processAceArrayNew(aces, ipauniqueid, ADLabels.IPAUser, queries);
 
         queries.properties.props.push({
-            objectid: ipantsecurityidentifier,
+            objectid: ipauniqueid,
             map: properties,
         });
         

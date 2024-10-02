@@ -160,7 +160,7 @@ global.appStore = {
                 scale: 1.5,
                 color: '#17B2E6',
             },
-            IPAComputer: {
+            IPAHost: {
                 font: "'Font Awesome 5 Free'",
                 content: '\uF108',
                 scale: 1.2,
