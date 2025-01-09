@@ -1,7 +1,7 @@
 import React from 'react';
 
 const General = () => {
-    rerturn(
+    return(
         <p>
             Principals with the Application Admin role can control
             tenant-resident apps.
