@@ -1,0 +1,1664 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="https://bloodhound.specterops.io/resources/nodes/overview" name="canonical" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nodes &mdash; BloodHound 4.3.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=232b7ae2" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=0503a316"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Edges" href="edges.html" />
+    <link rel="prev" title="The BloodHound GUI" href="bloodhound-gui.html" />
+   
+  
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            BloodHound
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/windows.html">Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/osx.html">macOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/linux.html">Linux</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data Collection</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../data-collection/sharphound.html">SharpHound</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-collection/sharphound-all-flags.html">All SharpHound Flags, Explained</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-collection/azurehound.html">AzureHound</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-collection/azurehound-all-flags.html">All AzureHound Flags, Explained</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-collection/bloodhound-py.html">BloodHound.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data Analysis</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="bloodhound-gui.html">The BloodHound GUI</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Nodes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#users">Users</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#node-properties">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extra-properties">Extra Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#group-membership">Group Membership</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#local-admin-rights">Local Admin Rights</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#execution-privileges">Execution Privileges</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#outbound-object-control">Outbound Object Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#inbound-object-control">Inbound Object Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#groups">Groups</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Extra Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#group-members">Group Members</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Group Membership</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Local Admin Rights</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Execution Privileges</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Outbound Object Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Inbound Object Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#computers">Computers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">Extra Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#local-admins">Local Admins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#inbound-execution-privileges">Inbound Execution Privileges</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">Group Membership</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">Local Admin Rights</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#outbound-execution-privileges">Outbound Execution Privileges</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">Inbound Object Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">Outbound Object Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#domains">Domains</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id14">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">Extra Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#foreign-members">Foreign Members</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#inbound-trusts">Inbound Trusts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#outbound-trusts">Outbound Trusts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id16">Inbound Object Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#gpos">GPOs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id17">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">Extra Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#affected-objects">Affected Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id19">Inbound Object Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ous">OUs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id20">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id21">Extra Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#affecting-gpos">Affecting GPOs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#descendant-objects">Descendant Objects</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#aztenant">AZTenant</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id22">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id23">Extra Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id24">Descendant Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#inbound-control">Inbound Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#azuser">AZUser</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id25">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id26">Group Membership</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id27">Outbound Object Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id28">Inbound Object Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#azgroup">AZGroup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id29">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id30">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id31">Extra Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id32">Group Members</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id33">Group Membership</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id34">Outbound Object Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id35">Inbound Object Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#azapp">AZApp</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id36">Inbound Object Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#azsubscription">AZSubscription</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id37">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#descendent-objects">Descendent Objects</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#azresourcegroup">AZResourceGroup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id38">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id39">Descendent Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id40">Inbound Object Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#azvm">AZVM</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id41">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id42">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id43">Extra Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id44">Inbound Execution Privileges</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id45">Inbound Object Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#azdevice">AZDevice</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id46">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id47">Inbound Execution Privileges</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#azserviceprincipal">AZServicePrincipal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id48">Group Membership</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id49">Outbound Object Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id50">Inbound Object Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#azautomationaccount">AZAutomationAccount</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id51">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id52">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id53">Extra Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id54">Inbound Object Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#azcontainerregistry">AZContainerRegistry</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id55">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id56">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id57">Extra Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id58">Inbound Object Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#azfunctionapp">AZFunctionApp</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id59">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id60">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id61">Extra Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id62">Inbound Object Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#azlogicapp">AZLogicApp</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id63">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id64">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id65">Extra Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id66">Inbound Object Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#azmanagedcluster">AZManagedCluster</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id67">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id68">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id69">Extra Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id70">Inbound Object Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#azvmscaleset">AZVMScaleSet</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id71">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id72">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id73">Extra Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id74">Inbound Object Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#azwebapp">AzWebApp</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id75">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id76">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id77">Extra Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id78">Inbound Object Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#azmanagementgroup">AzManagementGroup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id79">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id80">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id81">Extra Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id82">Descendent Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id83">Inbound Object Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#azrole">AzRole</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id84">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id85">Extra Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#assignments">Assignments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#azkeyvault">AZKeyVault</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id86">Node Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vault-readers">Vault Readers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id87">Inbound Object Control</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="edges.html">Edges</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Further Reading/Viewing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../further-reading/further-reading.html">Further Reading/Viewing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../further-reading/json.html">BloodHound JSON Formats</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BloodHound</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Nodes</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/data-analysis/nodes.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="deprecated admonition">
+<p class="admonition-title">Deprecated Documentation</p>
+<p><strong>This documentation refers to deprecated BloodHound Legacy (version 4.3, released in 2023).</strong></p>
+<p>Please use the <a class="reference external" href="https://bloodhound.specterops.io/resources/nodes/overview">current BloodHound CE Documentation</a>.</p>
+</div>
+<section id="nodes">
+<h1>Nodes<a class="headerlink" href="#nodes" title="Link to this heading"></a></h1>
+<p>Nodes represent principals and other objects in Active Directory.
+BloodHound stores certain information about each node on the node
+itself in the neo4j database, and the GUI automatically performs
+several queries to gather insights about the node, such as how
+privileged the node is, or which GPOs apply to the node, etc. Simply
+click the node in the BloodHound GUI, and the “Node Info” tab will
+populate with all that information for the node.</p>
+<section id="users">
+<h2>Users<a class="headerlink" href="#users" title="Link to this heading"></a></h2>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>USERNAME&#64;DOMAIN.COM</strong>: the UPN formatted name of the user, where
+USERNAME is the SAM Account Name, and DOMAIN.COM is the fully
+qualified domain name of the domain the user is in.</p></li>
+<li><p><strong>Sessions</strong>: The count of computers this user has been observed
+logging onto. Click this number to visually see the connections
+between those computers and this user</p></li>
+<li><p><strong>Sibling Objects in the Same OU</strong>: the number of other AD users, groups,
+and computers that belong to the same OU as this user. This can be
+very helpful when trying to figure out the lay of the land for an
+environment</p></li>
+<li><p><strong>Reachable High Value Targets</strong>: The count of how many high value
+targets this user has an attack path to. A high value target is by
+default any computer or user that belongs to the domain admins,
+domain controllers, and several other high privilege Active Directory
+groups. Click this number to see the shortest attack paths from this user
+to those high value targets.</p></li>
+<li><p><strong>Effective Inbound GPOs</strong>: the count of GPOs that apply to this user.
+Click the number to see the GPOs and how they apply to this user.</p></li>
+<li><p><strong>See user within Domain/OU Tree</strong>: click this to see where the user
+is placed in the OU tree. This can give you insights about the
+geographic location of the user as well as organizational placement
+of the actual person.</p></li>
+</ul>
+<section id="node-properties">
+<h3>Node Properties<a class="headerlink" href="#node-properties" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Display name</strong>: The Active Directory display name for the user</p></li>
+<li><p><strong>Object ID</strong>: The user’s SID. In neo4j this is stored as the user’s
+objectid to uniquely identify the node</p></li>
+<li><p><strong>Password Last Changed</strong>: The human-readable date for when the user’s
+password last changed. This is stored internally in Unix epoch format</p></li>
+<li><p><strong>Last Logon</strong>: The last time the domain controller you got this data from
+handled a logon request for the user</p></li>
+<li><p><strong>Last Logon (Replicated)</strong>: The last time any domain controller handled
+a logon for this user</p></li>
+<li><p><strong>Enabled</strong>: Whether the user object is enabled in Active Directory. Fun
+fact: if you control a disabled user object, you can re-enable that
+user object.</p></li>
+<li><p><strong>AdminCount</strong>: Whether the user object in Active Directory currently,
+or possibly ever has belonged to a certain set of highly privileged
+groups. This property is related to the AdminSDHolder object and the
+SDProp process. Read about that here: <a class="reference external" href="https://adsecurity.org/?p=1906">https://adsecurity.org/?p=1906</a></p></li>
+<li><p><strong>Compromised</strong>: Whether the user is marked as Owned. You can mark any
+user in the BloodHound GUI as Owned by right-clicking it and clicking
+“Mark User as Owned”.</p></li>
+<li><p><strong>Password Never Expires</strong>: Whether the UAC flag is set for the user in
+Active Directory to not require the user to update their password</p></li>
+<li><p><strong>Cannot Be Delegated</strong>: Whether the UAC flag is set on the user in
+Active Directory to disallow kerberos delegation for this user. If
+this is “True”, then the user cannot be abused as part of a kerberos
+delegation attack</p></li>
+<li><p><strong>ASREP Roastable</strong>: Whether the user can be ASREP roasted. For more info
+about that attack, see <a class="reference external" href="https://github.com/GhostPack/Rubeus#asreproast">https://github.com/GhostPack/Rubeus#asreproast</a></p></li>
+</ul>
+</section>
+<section id="extra-properties">
+<h3>Extra Properties<a class="headerlink" href="#extra-properties" title="Link to this heading"></a></h3>
+<p>This section displays some other information about the node, plus all other
+non-default, string-type property values from Active Directory if you used
+the –CollectAllProperties flag. The default properties you’ll see here
+include:</p>
+<ul class="simple">
+<li><p><strong>distinguishedname</strong>: The distinguished name (DN) of the user</p></li>
+<li><p><strong>domain</strong>: The FQDN of the domain the user is in</p></li>
+<li><p><strong>name</strong>: The UPN-formatted name of the user</p></li>
+<li><p><strong>passwordnotreqd</strong>: Whether the UAC flag is set on the user object to
+not require the user to have a password. Note that this does not
+necessarily mean the user does <em>not</em> have a password, just that the user
+is allowed to not have one</p></li>
+<li><p><strong>userpassword</strong>: Under certain conditions, you may have a clear-text
+password show up in this property. Most commonly, we have seen that some
+sort of Unix/Linux-based application will write a password to this property
+for an AD account the application is running as. This is possibly the
+current AD password for the user, but is not guaranteed to be the current
+password.</p></li>
+<li><p><strong>unconstraineddelegation</strong>: Whether the user is allowed to perform
+unconstrained kerberos delegation. See more info about that here:
+<a class="reference external" href="https://blog.harmj0y.net/redteaming/another-word-on-delegation/">https://blog.harmj0y.net/redteaming/another-word-on-delegation/</a></p></li>
+</ul>
+</section>
+<section id="group-membership">
+<h3>Group Membership<a class="headerlink" href="#group-membership" title="Link to this heading"></a></h3>
+<p>This section displays stats about Active Directory security grops the user
+belongs to:</p>
+<ul class="simple">
+<li><p><strong>First Degree Group Memberships</strong>: AD security groups the user is
+directly added to. If you typed <cite>net user david.mcguire /domain</cite>, for
+example, these are the groups you’d see this user belonging to.</p></li>
+<li><p><strong>Unrolled Group Membership</strong>: Groups can be added to groups, and those
+group nestings can grant admin rights, control of AD objects, and other
+privileges to many more users than intended. These are the groups that
+this user effectively belongs to, because the groups the user explicitly
+belongs to have been added to those groups.</p></li>
+<li><p><strong>Foreign Group Membership</strong>: Groups in other Active Directory domains
+this user belongs to</p></li>
+</ul>
+</section>
+<section id="local-admin-rights">
+<h3>Local Admin Rights<a class="headerlink" href="#local-admin-rights" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree Local Admin</strong>: The number of computers that this user
+itself has been added to the local administrators group on. If you were
+to type <cite>net localgroup administrators</cite> on those systems, you would see
+this user in the list</p></li>
+<li><p><strong>Group Delegation Local Admin Rights</strong>: AD security groups can be added
+to local administrator groups. This number shows the number of computers
+this user has local admin rights on through security group delegation,
+regardless of how deep those group nestings may go</p></li>
+<li><p><strong>Derivative Local Admin Rights</strong>: This query does not run by default
+because it’s a very expensive query for neo4j to run. If you press the play
+button here, neo4j will run the query and return the number of computers
+this user has “derivative” local admin rights on. For more info about
+this concept, see <a class="reference external" href="http://www.sixdub.net/?p=591">http://www.sixdub.net/?p=591</a></p></li>
+</ul>
+</section>
+<section id="execution-privileges">
+<h3>Execution Privileges<a class="headerlink" href="#execution-privileges" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree RDP Privileges</strong>: The number of computers where this user
+has been added to the local Remote Desktop Users group.</p></li>
+<li><p><strong>Group Delegated RDP Privileges</strong>: The number of computers where this user
+has remote desktop logon rights via security group delegation</p></li>
+<li><p><strong>First Degree DCOM Privileges</strong>: The number of computers where this user
+has been added to the local Distributed COM Users group</p></li>
+<li><p><strong>Group Delegated DCOM Privileges</strong>: The number of computers where this
+user has group delegated DCOM rights</p></li>
+<li><p><strong>SQL Admin Rights</strong>: The number of computers where this user is very
+likely granted SA privileges on an MSSQL instance. This number is inferred
+by the number of computers listed on the user’s serviceprincipalnames
+attribute where an MSSQL instance is referenced</p></li>
+<li><p><strong>Constrained Delegation Privileges</strong>: The number of computers that trust
+this user to perform constrained delegation. This number is inferred by
+insepecting the msDS-AllowedToDelegateTo property on the user object in
+Active Directory and getting a count for how many computers are listed
+in that attribute</p></li>
+</ul>
+</section>
+<section id="outbound-object-control">
+<h3>Outbound Object Control<a class="headerlink" href="#outbound-object-control" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree Object Control</strong>: The number of objects in AD where this
+user is listed as the IdentityReference on an abusable ACE. In other words,
+the number of objects in Active Directory that this user can take control
+of, without relying on security group delegation</p></li>
+<li><p><strong>Group Delegated Object Control</strong>: The number of objects in AD where this
+user has control via security group delegation, regardless of how deep those
+group nestings may go</p></li>
+<li><p><strong>Transitive Object Control</strong>: The number of objects this user can gain control
+of by performing ACL-only based attacks in Active Directory. In other words,
+the maximum number of objects the user can gain control of without needing
+to pivot to any other system in the network, just by manipulating objects
+in the directory</p></li>
+</ul>
+</section>
+<section id="inbound-object-control">
+<h3>Inbound Object Control<a class="headerlink" href="#inbound-object-control" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Object Controllers</strong>: The number of principals that are listed
+as the IdentityReference on an abusable ACE on this user’s DACL. In other
+words, the number of users, groups, or computers that directly have control
+of this user</p></li>
+<li><p><strong>Unrolled Object Controllers</strong>: The <em>actual</em> number of principals that have
+control of this object through security group delegation. This number can
+sometimes be wildly higher than the previous number</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: The number of objects in AD that can achieve
+control of this object through ACL-based attacks</p></li>
+</ul>
+</section>
+</section>
+<section id="groups">
+<h2>Groups<a class="headerlink" href="#groups" title="Link to this heading"></a></h2>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>GROUPNAME&#64;DOMAIN.COM</strong>: The UPN formatted name of the security group, where
+GROUPNAME is the group’s SAM Account Name, and DOMAIN.COM is the fully qualified
+name of the domain the group is in</p></li>
+<li><p><strong>Sessions</strong>: The number of computers that users belonging to this group have
+been seen logging onto. This will include users that belong to this group through
+any number of nested memberships. Very useful for targetting users that belong
+to a particular security group</p></li>
+<li><p><strong>Reachable High Value Targets</strong>: The count of how many high value targets this
+group (and therefore the users belonging to this group) has an attack path to.
+A high value target is by default any computer or user that belongs to the domain
+admins, domain controllers, and several other high privilege Active Directory
+groups. Click this number to see the shortest attack paths from this user to
+those high value targets.</p></li>
+</ul>
+<section id="id1">
+<h3>Node Properties<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The SID of the group. The group’s SID is stored internally as its
+objectid</p></li>
+<li><p><strong>Description</strong>: The contents of the description field for the group in Active
+Directory.</p></li>
+<li><p><strong>Admin Count</strong>: Whether the group object in Active Directory currently, or
+possibly ever has belonged to a certain set of highly privileged groups. This
+property is related to the AdminSDHolder object and the SDProp process. Read
+about that here: <a class="reference external" href="https://adsecurity.org/?p=2053">https://adsecurity.org/?p=2053</a></p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>Extra Properties<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p>This section displays some other information about the node, plus all other
+non-default, string-type property values from Active Directory if you used the
+–CollectAllProperties flag. The default properties you’ll see here include:</p>
+<ul class="simple">
+<li><p><strong>distinguishedname</strong>: The distinguished name (DN) of the group</p></li>
+<li><p><strong>domain</strong>: The FQDN of the domain the group belongs to</p></li>
+<li><p><strong>name</strong>: The UPN formatted name of the group</p></li>
+</ul>
+</section>
+<section id="group-members">
+<h3>Group Members<a class="headerlink" href="#group-members" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Direct Members</strong>: The number of principals that have been directly added to
+this group. If you typed <cite>net group GROUPNAME /domain</cite>, these are the
+principals you would see in that output</p></li>
+<li><p><strong>Unrolled Members</strong>: The actual number of users that effectively belong to
+this group, no matter how many layers of nested group membership that goes</p></li>
+<li><p><strong>Foreign Members</strong>: The number of users from other domains that belong to this
+group</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>Group Membership<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree Group Membership</strong>: The number of groups this group has been
+added to</p></li>
+<li><p><strong>Unrolled Member Of</strong>: The number of groups this group belongs to through
+nested group memberships</p></li>
+<li><p><strong>Foreign Group Membership</strong>: Groups in other domains this group has been added
+to</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>Local Admin Rights<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree Local Admin</strong>: The number of computers this group itself has been
+added to the local administrators group on</p></li>
+<li><p><strong>Group Delegated Local Admin Rights</strong>: The number of computers this group (and
+the members of this group) has admin rights on via nested group memberships</p></li>
+<li><p><strong>Derivative Local Admin Rights</strong>: This query does not run by default because
+it’s a very expensive query for neo4j to run. If you press the play button here,
+neo4j will run the query and return the number of computers this group has
+“derivative” local admin rights on. For more info about this concept, see
+<a class="reference external" href="http://www.sixdub.net/?p=591">http://www.sixdub.net/?p=591</a></p></li>
+</ul>
+</section>
+<section id="id5">
+<h3>Execution Privileges<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree RDP Privileges</strong>: The number of computers where this group has
+been added to the local Remote Desktop Users group.</p></li>
+<li><p><strong>Group Delegated RDP Privileges</strong>: The number of computers where this group has
+remote desktop logon rights via security group delegation</p></li>
+<li><p><strong>First Degree DCOM Privileges</strong>: The number of computers where this group has
+been added to the local Distributed COM Users group</p></li>
+<li><p><strong>Group Delegated DCOM Privileges</strong>: The number of computers where this group has
+group delegated DCOM rights</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>Outbound Object Control<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree Object Control</strong>: The number of objects in AD where this group is
+listed as the IdentityReference on an abusable ACE. In other words, the number of
+objects in Active Directory that this group can take control of, without relying
+on security group delegation</p></li>
+<li><p><strong>Group Delegated Object Control</strong>: The number of objects in AD where this group
+has control via security group delegation, regardless of how deep those group
+nestings may go</p></li>
+<li><p><strong>Transitive Object Control</strong>: The number of objects this group can gain control
+of by performing ACL-only based attacks in Active Directory. In other words, the
+maximum number of objects the group can gain control of without needing to pivot
+to any other system in the network, just by manipulating objects in the directory</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>Inbound Object Control<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Object Controllers</strong>: The number of principals that are listed as the
+IdentityReference on an abusable ACE on this group’s DACL. In other words, the
+number of users, groups, or computers that directly have control of this group</p></li>
+<li><p><strong>Unrolled Object Controllers</strong>: The actual number of principals that have control
+of this object through security group delegation. This number can sometimes be
+wildly higher than the previous number</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: The number of objects in AD that can achieve
+control of this object through ACL-based attacks</p></li>
+</ul>
+</section>
+</section>
+<section id="computers">
+<h2>Computers<a class="headerlink" href="#computers" title="Link to this heading"></a></h2>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>COMPUTERNAME.DOMAIN.COM</strong>: The fully qualified name of the computer</p></li>
+<li><p><strong>Sessions</strong>: The total number of users that have been observed logging onto this
+computer</p></li>
+<li><p><strong>Reachable High Value Targets</strong>: The count of how many high value targets this
+computer has an attack path to. A high value target is by default any computer or
+user that belongs to the domain admins, domain controllers, and several other high
+privilege Active Directory groups. Click this number to see the shortest attack
+paths from this computer to those high value targets</p></li>
+<li><p><strong>Sibling Objects in the Same OU</strong>: the number of other AD users, groups, and
+computers that belong to the same OU as this computer. This can be very helpful
+when trying to figure out the lay of the land for an environment</p></li>
+<li><p><strong>Effective Inbound GPOs</strong>: the count of GPOs that apply to this computer. Click
+the number to see the GPOs and how they apply to this computer</p></li>
+<li><p><strong>See Computer within Domain/OU Tree</strong>: click this to see where the computer is
+placed in the OU tree. This can give you insights about the geographic location of
+the computer as well as the purpose and function of the computer</p></li>
+</ul>
+<section id="id8">
+<h3>Node Properties<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The SID of the computer. We store this in neo4j as the computer’s
+objectid to uniquely identify the node</p></li>
+<li><p><strong>OS</strong>: The operating system running on the computer, according to the corresponding
+property on the computer object in Active Directory</p></li>
+<li><p><strong>Enabled</strong>: Whether the computer object is enabled</p></li>
+<li><p><strong>Allows Unconstrained Delegation</strong>: Whether the computer is trusted to perform
+unconstrained delegation. By default, all domain controllers are trusted for this
+style of kerberos delegation. For information about the abuse related to this
+configuration, see <a class="reference external" href="https://blog.harmj0y.net/redteaming/another-word-on-delegation/">https://blog.harmj0y.net/redteaming/another-word-on-delegation/</a></p></li>
+<li><p><strong>Compromised</strong>: Whether the computer is marked as Owned. You can mark any computer in
+the BloodHound GUI as Owned by right-clicking it and clicking “Mark Computer as Owned”.</p></li>
+<li><p><strong>LAPS Enabled</strong>: Whether LAPS is running on the computer. This is determined by
+checking whether the associated MS LAPS properties are populated on the computer
+object</p></li>
+<li><p><strong>Password Last Changed</strong>: The human readable time for when the computer account’s
+password last changed in Active Directory</p></li>
+<li><p><strong>Last Logon (Replicated)</strong>: The last time any domain controller handled a logon
+for this computer. In other words, the last time the computer authenticated to the
+domain</p></li>
+</ul>
+</section>
+<section id="id9">
+<h3>Extra Properties<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<p>This section displays some other information about the node, plus all other non-default,
+string-type property values from Active Directory if you used the –CollectAllProperties
+flag. The default properties you’ll see here include:</p>
+<ul class="simple">
+<li><p><strong>distinguishedname</strong>: The distinguished name (DN) of the computer</p></li>
+<li><p><strong>domain</strong>: The fully qualified name of the domain the computer is in</p></li>
+<li><p><strong>name</strong>: The FQDN of the computer</p></li>
+<li><p><strong>serviceprincipalnames</strong>: The list of SPNs on the computer. Very useful for determining
+any non-default services that may be running on the computer, such as MSSQL</p></li>
+</ul>
+</section>
+<section id="local-admins">
+<h3>Local Admins<a class="headerlink" href="#local-admins" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Admins</strong>: The count of principals that have been directly added to the local
+administrators group on the computer. If you typed <cite>net localgroup administrators</cite> on
+the computer, these are the principals you would see listed in that output</p></li>
+<li><p><strong>Unrolled Admins</strong>: The real number of principals that have local admin rights on this
+computer via nested group memberships</p></li>
+<li><p><strong>Foreign Admins</strong>: The number of users from other domains that have admin rights on
+this computer</p></li>
+<li><p><strong>Derivative Local Admins</strong>: The count of users that can execute an attack path relying
+on admin rights and token theft to compromise this system. For more information about
+this attack, see <a class="reference external" href="http://www.sixdub.net/?p=591">http://www.sixdub.net/?p=591</a></p></li>
+</ul>
+</section>
+<section id="inbound-execution-privileges">
+<h3>Inbound Execution Privileges<a class="headerlink" href="#inbound-execution-privileges" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree Remote Desktop Users</strong>: The number of principals that have been granted
+RDP rights to this system by being added to the local Remote Desktop Users group</p></li>
+<li><p><strong>Group Delegated Remote Desktop Users</strong>: The real number of users that have RDP access
+to this system through nested group memberships</p></li>
+<li><p><strong>First Degree Distributed COM Users</strong>: The number of principals added to the local
+Distributed COM Users group</p></li>
+<li><p><strong>Group Delegated Distributed COM Users</strong>: The number of users with DCOM access to this
+system through nested group memberships</p></li>
+<li><p><strong>SQL Admins</strong>: The number of users that have SA privileges on an MSSQL instance running
+on this system. This is determined by inspecting the serviceprincipalname attribute on
+user objects in AD</p></li>
+</ul>
+</section>
+<section id="id10">
+<h3>Group Membership<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree Group Memberships</strong>: AD security groups the computer is directly added to.</p></li>
+<li><p><strong>Unrolled Group Membership</strong>: The number of groups this computer belongs to through
+nested group memberships</p></li>
+<li><p>Foreign Group Membership: Groups in other Active Directory domains this computer belongs
+to</p></li>
+</ul>
+</section>
+<section id="id11">
+<h3>Local Admin Rights<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree Local Admin</strong>: The number of computers that this computer itself has been
+added to the local administrators group on.</p></li>
+<li><p><strong>Group Delegation Local Admin Rights</strong>: This number shows the number of computers this
+computer has local admin rights on through security group delegation, regardless of how
+deep those group nestings may go</p></li>
+<li><p><strong>Derivative Local Admin Rights</strong>: This query does not run by default because it’s a very
+expensive query for neo4j to run. If you press the play button here, neo4j will run the
+query and return the number of computers this computer has “derivative” local admin rights
+on. For more info about this concept, see <a class="reference external" href="http://www.sixdub.net/?p=591">http://www.sixdub.net/?p=591</a></p></li>
+</ul>
+</section>
+<section id="outbound-execution-privileges">
+<h3>Outbound Execution Privileges<a class="headerlink" href="#outbound-execution-privileges" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree RDP Privileges</strong>: The number of computers where this computer has been
+added to the local Remote Desktop Users group.</p></li>
+<li><p><strong>Group Delegated RDP Privileges</strong>: The number of computers where this computer has remote
+desktop logon rights via security group delegation</p></li>
+<li><p><strong>First Degree DCOM Privileges</strong>: The number of computers where this computer has been added
+to the local Distributed COM Users group</p></li>
+<li><p><strong>Group Delegated DCOM Privileges</strong>: The number of computers where this computer has group
+delegated DCOM rights</p></li>
+<li><p>Constrained Delegation Privileges: The number of computers that trust this computer to
+perform constrained delegation. This number is inferred by insepecting the
+msDS-AllowedToDelegateTo property on the computer objects in Active Directory and getting a
+count for how many computers are listed in that attribute</p></li>
+</ul>
+</section>
+<section id="id12">
+<h3>Inbound Object Control<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Object Controllers</strong>: The number of principals that are listed as the
+IdentityReference on an abusable ACE on this computer’s DACL. In other words, the number of
+users, groups, or computers that directly have control of this computer</p></li>
+<li><p><strong>Unrolled Object Controllers</strong>: The actual number of principals that have control of this
+object through security group delegation. This number can sometimes be wildly higher than
+the previous number</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: The number of objects in AD that can achieve control of
+this object through ACL-based attacks</p></li>
+</ul>
+</section>
+<section id="id13">
+<h3>Outbound Object Control<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree Object Control</strong>: The number of objects in AD where this computer is listed as
+the IdentityReference on an abusable ACE. In other words, the number of objects in Active
+Directory that this computer can take control of, without relying on security group delegation</p></li>
+<li><p><strong>Group Delegated Object Control</strong>: The number of objects in AD where this computer has
+control via security group delegation, regardless of how deep those group nestings may go</p></li>
+<li><p><strong>Transitive Object Control</strong>: The number of objects this computer can gain control of by
+performing ACL-only based attacks in Active Directory. In other words, the maximum number of
+objects the computer can gain control of without needing to pivot to any other system in the
+network, just by manipulating objects in the directory</p></li>
+</ul>
+</section>
+</section>
+<section id="domains">
+<h2>Domains<a class="headerlink" href="#domains" title="Link to this heading"></a></h2>
+<p>At the top of the node info tab you’ll see this information:</p>
+<ul class="simple">
+<li><p><strong>Users</strong>: The total number of user objects in the domain</p></li>
+<li><p><strong>Groups</strong>: The total number of security groups in the domain</p></li>
+<li><p><strong>Computers</strong>: The total number of computer objects in the domain</p></li>
+<li><p><strong>OUs</strong>: The total number of organizational units in the domain</p></li>
+<li><p><strong>GPOs</strong>: The total number of group policy objects in the domain</p></li>
+<li><p><strong>Map OU Structure</strong>: Click this to see the entire tree structure, including all OUs, users,
+and computers</p></li>
+</ul>
+<section id="id14">
+<h3>Node Properties<a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The SID of the domain. We map this internally in neo4j to a property called
+objectid to uniquely identify the node</p></li>
+<li><p><strong>Domain Functional Level</strong>: The functional level of the Active Directory domain. This becomes
+particularly relevant in certain attack scenarios, such as resource-based constrained
+delegation</p></li>
+</ul>
+</section>
+<section id="id15">
+<h3>Extra Properties<a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
+<p>This section displays some other information about the node, plus all other non-default,
+string-type property values from Active Directory if you used the –CollectAllProperties flag. The
+default properties you’ll see here include:</p>
+<ul class="simple">
+<li><p><strong>distinguishedname</strong>: The distinguished name (DN) of the domain head object</p></li>
+<li><p><strong>domain</strong>: The fully qualified name of the domain</p></li>
+<li><p><strong>name</strong>: The name of the domain, this is what is displayed in the node label</p></li>
+</ul>
+</section>
+<section id="foreign-members">
+<h3>Foreign Members<a class="headerlink" href="#foreign-members" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Foreign Users</strong>: Users from other domains that have been added to security groups in this
+domain</p></li>
+<li><p><strong>Foreign Groups</strong>: Groups from other domains that have been added to security groups in this
+domain</p></li>
+<li><p><strong>Foreign Admins</strong>: Users in other domains that have been granted local admin rights on
+computers in this domain</p></li>
+<li><p><strong>Foreign GPO Controllers</strong>: Users in other domains that have been granted control of group
+policy objects in this domain</p></li>
+</ul>
+</section>
+<section id="inbound-trusts">
+<h3>Inbound Trusts<a class="headerlink" href="#inbound-trusts" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree Trusts</strong>: The number of other domains that directly trust this domain</p></li>
+<li><p><strong>Effective Inbound Trusts</strong>: The number of other domains that trust this domain through
+trusting other domains that trust this domain. Easier to understand by clicking the number</p></li>
+</ul>
+</section>
+<section id="outbound-trusts">
+<h3>Outbound Trusts<a class="headerlink" href="#outbound-trusts" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree Trusts</strong>: The number of domains tha thtis domain directly trusts</p></li>
+<li><p><strong>Effective Outbound Trusts</strong>: The number of domains this domain trusts by trusting other
+domains</p></li>
+</ul>
+</section>
+<section id="id16">
+<h3>Inbound Object Control<a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree Controllers</strong>: The number of principals that are listed as an IdentityReference
+on an abusable ACE on the domain head object. In other words, the number of principals that
+have direct control of the domain head. Control of this object is incredibly dangerous, as
+it gives principals the ability to perform the DCSync attack, or grant themselves any
+privileges on any object in the directory</p></li>
+<li><p><strong>Unrolled Controllers</strong>: The real number of principals that have control of the domain head
+through nested security groups</p></li>
+<li><p><strong>Transitive Controllers</strong>: The number of principals that can gain control of the domain head
+by executing an ACL-only attack path, without the need to pivoting to any other computers in
+the domain</p></li>
+<li><p><strong>Calculated Principals with DCSync Privileges</strong>: The number of principals that have the
+DCSync privilege, which is granted with the combination of two specific rights, GetChanges
+and GetChangesAll</p></li>
+</ul>
+</section>
+</section>
+<section id="gpos">
+<h2>GPOs<a class="headerlink" href="#gpos" title="Link to this heading"></a></h2>
+<p>At the top of the node info tab you will see this info about the GPO:</p>
+<ul class="simple">
+<li><p><strong>GPO NAME&#64;DOMAIN.COM</strong> The name of the GPO where “GPO NAME” is the display name of the GPO,
+and DOMAIN.COM is the fully qualified name of the domain the GPO resides in</p></li>
+<li><p><strong>Reachable High Value Targets</strong>: The number of high value targets reachable where an attack
+path starts from this Group Policy Object.</p></li>
+</ul>
+<section id="id17">
+<h3>Node Properties<a class="headerlink" href="#id17" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The GUID of the GPO, pulled from the GUID property on the GPO from Active
+Directory</p></li>
+<li><p><strong>GPO File Path</strong>: The location on a domain controller where the Group Policy files for this
+GPO are located. Particularly relevant for when you are doing group policy-based attacks,
+or for pillaging group policy files for juicy information such as clear text passwords. For
+more info about GPO-based attacks, see <a class="reference external" href="https://wald0.com/?p=179">https://wald0.com/?p=179</a></p></li>
+</ul>
+</section>
+<section id="id18">
+<h3>Extra Properties<a class="headerlink" href="#id18" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>distinguishedname</strong> The distinguished name (DN) of the GPO</p></li>
+<li><p><strong>domain</strong>: The FQDN of the domain this GPO resides in</p></li>
+<li><p><strong>name</strong>: The name of the GPO, useful for differentiating GPOs with the same name in different
+domains</p></li>
+</ul>
+</section>
+<section id="affected-objects">
+<h3>Affected Objects<a class="headerlink" href="#affected-objects" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Directly Affected OUs</strong>: GPOs can be linked to domains, OUs, and sites. This number shows
+the number of domain/OU objects this GPO is linked to</p></li>
+<li><p><strong>Affected OUs</strong>: The actual number of OUs affected by the GPO, regardless of OU tree depth</p></li>
+<li><p><strong>Computer Objects</strong>: The number of computers this GPO applies to. Click the number to
+visually see how the GPO applies to those computers</p></li>
+<li><p><strong>User Objects</strong>: The number of user objects this GPO applies to. Click the number to
+visually see how the GPO applies to those users</p></li>
+</ul>
+</section>
+<section id="id19">
+<h3>Inbound Object Control<a class="headerlink" href="#id19" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Object Controllers</strong>: The number of principals that are listed as the
+IdentityReference on an abusalbe ACE on the GPO’s DACL. In other words, the number of
+principals that can modify the GPO</p></li>
+<li><p><strong>Unrolled Object Controllers</strong>: The real number of principals that have control of this GPO
+through security group nestings</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: The number of principals that can take control of this GPO
+through ACL-based attacks</p></li>
+</ul>
+</section>
+</section>
+<section id="ous">
+<h2>OUs<a class="headerlink" href="#ous" title="Link to this heading"></a></h2>
+<p>At the top of the node info tab you will see this info about the OU:</p>
+<ul class="simple">
+<li><p><strong>OU NAME&#64;DOMAIN.COM</strong>: The UPN formatted name of the OU</p></li>
+<li><p><strong>See OU Within Domain Tree</strong>: Click this to see the placement of the OU within the OU tree</p></li>
+</ul>
+<section id="id20">
+<h3>Node Properties<a class="headerlink" href="#id20" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The GUID of the OU, mapped internally in the neo4j database as its objectid</p></li>
+<li><p><strong>Blocks Inheritance</strong>: Whether the OU blocks group policy enforcement inheritence. For more
+information about this concept, see <a class="reference external" href="https://wald0.com/?p=179">https://wald0.com/?p=179</a></p></li>
+</ul>
+</section>
+<section id="id21">
+<h3>Extra Properties<a class="headerlink" href="#id21" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>distinguishedname</strong>: The distinguished name (DN) of the OU</p></li>
+<li><p><strong>domain</strong>: The FQDN of the domain the OU resides in</p></li>
+<li><p><strong>name</strong>: The name of the OU, used to differentiate OUs with the same name in different
+domains</p></li>
+</ul>
+</section>
+<section id="affecting-gpos">
+<h3>Affecting GPOs<a class="headerlink" href="#affecting-gpos" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>GPOs Directly Affecting This OU</strong>: The number of OUs that are directly linked to this OU</p></li>
+<li><p><strong>GPOs Affecting This OU</strong>: The number of GPOs that apply to this OU, regardless of how
+many levels deep the OU is from the actual object the GPO is applied to. Easier to understand
+by clicking the number and visually seeing the connections</p></li>
+</ul>
+</section>
+<section id="descendant-objects">
+<h3>Descendant Objects<a class="headerlink" href="#descendant-objects" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Total User Objects</strong>: The total number of users under this OU, regardless of whether those
+users belong to OUs under this OU, etc.</p></li>
+<li><p><strong>Total Group Objects</strong>: The number of security groups under this OU</p></li>
+<li><p><strong>Total Computer Objects</strong>: The number of computer objects under this OU</p></li>
+<li><p><strong>Sibling Objects within OU</strong>: The total number of other objects that belong to the same OU
+this OU belongs to</p></li>
+</ul>
+</section>
+</section>
+<section id="aztenant">
+<h2>AZTenant<a class="headerlink" href="#aztenant" title="Link to this heading"></a></h2>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>TENANT NAME</strong>: The name of the tenant in Azure.</p></li>
+</ul>
+<section id="id22">
+<h3>Node Properties<a class="headerlink" href="#id22" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The tenant ID for the tenant.</p></li>
+</ul>
+</section>
+<section id="id23">
+<h3>Extra Properties<a class="headerlink" href="#id23" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The tenant ID for the tenant.</p></li>
+</ul>
+</section>
+<section id="id24">
+<h3>Descendant Objects<a class="headerlink" href="#id24" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Subscriptions</strong>: The subscriptions that fall under the tenant</p></li>
+<li><p><strong>Total VM Objects</strong>: The virtual machine resources in Azure resources</p></li>
+<li><p><strong>Total Resource Group Objects</strong>: The resource groups contained within the subscriptions under the tenant</p></li>
+<li><p><strong>Total Key Vault Objects</strong>: The key vault resources within Azure resources</p></li>
+<li><p><strong>Total User Objects</strong>: The number of users in AzureAD</p></li>
+<li><p><strong>Total Group Objects</strong>: The number of groups in AzureAD</p></li>
+</ul>
+</section>
+<section id="inbound-control">
+<h3>Inbound Control<a class="headerlink" href="#inbound-control" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Global Admins</strong>: Principals with the Global Admin role activated against this tenant</p></li>
+<li><p><strong>Privileged Role Admins</strong>: Principlas with the Privileged Role Admin role activated against this tenant</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: Principals with an object-control attack path to the tenant</p></li>
+</ul>
+</section>
+</section>
+<section id="azuser">
+<h2>AZUser<a class="headerlink" href="#azuser" title="Link to this heading"></a></h2>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>USERNAME&#64;DOMAIN.COM</strong>: the fully formatted name of the user, directly from Azure.</p></li>
+</ul>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Sessions</strong>: The count of computers this user has been observed
+logging onto. Click this number to visually see the connections
+between those computers and this user.</p></li>
+<li><p><strong>Reachable High Value Targets</strong>: The count of how many high value
+targets this user has an attack path to. A high value target is by
+default any computer or user that belongs to the domain admins,
+domain controllers, and several other high privilege Active Directory
+groups. Click this number to see the shortest attack paths from this user
+to those high value targets.</p></li>
+</ul>
+</section>
+<section id="id25">
+<h3>Node Properties<a class="headerlink" href="#id25" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The user’s object ID in AzureAD.</p></li>
+</ul>
+</section>
+<section id="id26">
+<h3>Group Membership<a class="headerlink" href="#id26" title="Link to this heading"></a></h3>
+<p>This section displays stats about Active Directory security groups the user
+belongs to:</p>
+<ul class="simple">
+<li><p><strong>First Degree Group Memberships</strong>:  The AzureAD security groups the user is
+directly added to.</p></li>
+<li><p><strong>Unrolled Group Membership</strong>: Groups that can be added to groups in AzureAD.</p></li>
+</ul>
+</section>
+<section id="id27">
+<h3>Outbound Object Control<a class="headerlink" href="#id27" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree Object Control</strong>: The number of objects where this user has direct control of in AzureAD and Azure resources.</p></li>
+<li><p><strong>Group Delegated Object Control</strong>: The number of objects in AzureAD and Azure resources where the group the user is assigned to has direct control over.</p></li>
+<li><p><strong>Transitive Object Control</strong>: The number of objects this user can gain control
+of by performing ACL-only based attacks in Active Directory. In other words,
+the maximum number of objects the user can gain control of without needing
+to pivot to any other system in the network, just by manipulating objects
+in the directory</p></li>
+</ul>
+</section>
+<section id="id28">
+<h3>Inbound Object Control<a class="headerlink" href="#id28" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Object Controllers</strong>: The number of principals that have direct control of  this user.</p></li>
+<li><p><strong>Unrolled Object Controllers</strong>: The number of principals that have
+control of this object through Azure group delegation.</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: The number of objects in AD that can achieve
+control of this object through ACL-based attacks</p></li>
+</ul>
+</section>
+</section>
+<section id="azgroup">
+<h2>AZGroup<a class="headerlink" href="#azgroup" title="Link to this heading"></a></h2>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>GROUPNAME</strong>: The name of the AzureAD Group.</p></li>
+</ul>
+<section id="id29">
+<h3>Overview<a class="headerlink" href="#id29" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Sessions</strong>: The number of on-premise computers that users belonging to this group have
+been seen logging onto. This will include users that belong to this group through
+any number of nested memberships. Very useful for targetting users that belong
+to a particular security group</p></li>
+<li><p><strong>Reachable High Value Targets</strong>: The count of how many high value targets this
+group (and therefore the users belonging to this group) has an attack path to.
+A high value target is by default any computer or user that belongs to the domain
+admins, domain controllers, and several other high privilege on-premise Active Directory
+groups. Click this number to see the shortest attack paths from this user to
+those high value targets.</p></li>
+</ul>
+</section>
+<section id="id30">
+<h3>Node Properties<a class="headerlink" href="#id30" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The group’s objectID in AzureAD</p></li>
+</ul>
+</section>
+<section id="id31">
+<h3>Extra Properties<a class="headerlink" href="#id31" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The group’s objectID in AzureAD</p></li>
+</ul>
+</section>
+<section id="id32">
+<h3>Group Members<a class="headerlink" href="#id32" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Direct Members</strong>: The number of principals that have been directly added to
+this in AzureAD.</p></li>
+<li><p><strong>Unrolled Members</strong>: The actual number of users that effectively belong to
+this group, no matter how many layers of nested group membership that goes</p></li>
+<li><p><strong>On-Prem Members</strong>: The number of users that contain an on-premise SID that are members of the group.</p></li>
+</ul>
+</section>
+<section id="id33">
+<h3>Group Membership<a class="headerlink" href="#id33" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree Group Membership</strong>: The number of groups this group has been
+added to</p></li>
+<li><p><strong>Unrolled Member Of</strong>: The number of groups this group belongs to through
+nested group memberships</p></li>
+</ul>
+</section>
+<section id="id34">
+<h3>Outbound Object Control<a class="headerlink" href="#id34" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree Object Control</strong>: In AzureAD, the number of objects where this group has direct control of.</p></li>
+<li><p><strong>Group Delegated Object Control</strong>: The number of objects where this
+group has control via security group delegation, regardless of how deep those
+group nestings may go.</p></li>
+<li><p><strong>Transitive Object Control</strong>: The number of objects this group can gain control through an object-control abuse attack path.</p></li>
+</ul>
+</section>
+<section id="id35">
+<h3>Inbound Object Control<a class="headerlink" href="#id35" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Object Controllers</strong>: In AzureAD, the number of principals that have direct control of this group.</p></li>
+<li><p><strong>Unrolled Object Controllers</strong>: The <em>actual</em> number of principals that have
+control of this group through security group delegation. This number can
+sometimes be wildly higher than the previous number</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: The number of objects that can assume control of this group through an object-control attack path.</p></li>
+</ul>
+</section>
+</section>
+<section id="azapp">
+<h2>AZApp<a class="headerlink" href="#azapp" title="Link to this heading"></a></h2>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>APPID</strong>: The application ID of the application in AzureAD.</p></li>
+</ul>
+<section id="id36">
+<h3>Inbound Object Control<a class="headerlink" href="#id36" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Object Controllers</strong>: The principals in AzureAD that are part of a role which can directly control the application.</p></li>
+<li><p><strong>Unrolled Object Controllers</strong>: The number of principals that can control the application through group membership and the roles applied to that group.</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: The number of objects in AzureAD that can achieve control of this object through an object-control attack path.</p></li>
+</ul>
+</section>
+</section>
+<section id="azsubscription">
+<h2>AZSubscription<a class="headerlink" href="#azsubscription" title="Link to this heading"></a></h2>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>See Subscription Under Tenant</strong>: See where the subscription lives relative to the tenant it trusts.</p></li>
+</ul>
+<section id="id37">
+<h3>Node Properties<a class="headerlink" href="#id37" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The Azure objectid for the resource group.</p></li>
+</ul>
+</section>
+<section id="descendent-objects">
+<h3>Descendent Objects<a class="headerlink" href="#descendent-objects" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Total VM Objects</strong>: The VMs in Azure that belong to the subscription</p></li>
+<li><p><strong>Total Resource Group Objects</strong>: The resource groups that belong to the subscription</p></li>
+<li><p><strong>Total Key Vault Objects</strong>: The Key vaults in Azure that belong to the subscription</p></li>
+</ul>
+</section>
+</section>
+<section id="azresourcegroup">
+<h2>AZResourceGroup<a class="headerlink" href="#azresourcegroup" title="Link to this heading"></a></h2>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>RESOURCEGROUPNAME</strong>: The full name of the resource group.</p></li>
+</ul>
+<section id="id38">
+<h3>Node Properties<a class="headerlink" href="#id38" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The Azure objectid for the resource group.</p></li>
+</ul>
+</section>
+<section id="id39">
+<h3>Descendent Objects<a class="headerlink" href="#id39" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Descendent VMs</strong>: The VMs in Azure that belong to the resource group</p></li>
+<li><p><strong>Descendent KeyVaults</strong>: The Key vaults in Azure that belong to the resource group</p></li>
+</ul>
+</section>
+<section id="id40">
+<h3>Inbound Object Control<a class="headerlink" href="#id40" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Object Controllers</strong>: The principals in AzureAD that directly can control the resource group.</p></li>
+<li><p><strong>Unrolled Object Controllers</strong>: The number of principals that can control the resource group through group membership.</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: The number of objects in AzureAD that can achieve control of this object through object-control attack paths.</p></li>
+</ul>
+</section>
+</section>
+<section id="azvm">
+<h2>AZVM<a class="headerlink" href="#azvm" title="Link to this heading"></a></h2>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>COMPUTERNAME</strong>: The full name of the VM</p></li>
+</ul>
+<section id="id41">
+<h3>Overview<a class="headerlink" href="#id41" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>See VM within Tenant</strong>: Unrolls the VM membership within Azure, displaying the VM’s resource group &amp; subscription.</p></li>
+<li><p><strong>Managed Identities</strong>: Shows the assigned managed identity service principals for the VM.</p></li>
+</ul>
+</section>
+<section id="id42">
+<h3>Node Properties<a class="headerlink" href="#id42" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The Azure objectid for the VM.</p></li>
+</ul>
+</section>
+<section id="id43">
+<h3>Extra Properties<a class="headerlink" href="#id43" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The Azure objectid for the computer.</p></li>
+</ul>
+</section>
+<section id="id44">
+<h3>Inbound Execution Privileges<a class="headerlink" href="#id44" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree Execution Rights</strong>: Principals that have the ability to execute commands or directly log onto the machine.</p></li>
+<li><p><strong>Group Delegated Execution Rights</strong>: Groups that have the ability to execute commands or directly log onto the machine.</p></li>
+</ul>
+</section>
+<section id="id45">
+<h3>Inbound Object Control<a class="headerlink" href="#id45" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Object Controllers</strong>: The number of principals that are in a role that has the ability to manage or execute code on the machine.</p></li>
+<li><p><strong>Unrolled Object Controllers</strong>: The actual number of principals that have control of this
+object through security group delegation. This number can sometimes be wildly higher than
+the previous number</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: The number of objects in AzureAD that can achieve control of this object through object-control attack paths.</p></li>
+</ul>
+</section>
+</section>
+<section id="azdevice">
+<h2>AZDevice<a class="headerlink" href="#azdevice" title="Link to this heading"></a></h2>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>DEVICENAME</strong>: The full name of the device</p></li>
+</ul>
+<section id="id46">
+<h3>Node Properties<a class="headerlink" href="#id46" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The Azure objectid for the device.</p></li>
+</ul>
+</section>
+<section id="id47">
+<h3>Inbound Execution Privileges<a class="headerlink" href="#id47" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Owners</strong>: Principals that have the ability to execute commands or directly log onto the machine.</p></li>
+<li><p><strong>InTune Admins</strong>: Principals that have the ability to setup InTune scripts to run on the machine.</p></li>
+</ul>
+</section>
+</section>
+<section id="azserviceprincipal">
+<h2>AZServicePrincipal<a class="headerlink" href="#azserviceprincipal" title="Link to this heading"></a></h2>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>ObjectID</strong>: The object ID of the service principal in AzureAD.</p></li>
+</ul>
+<section id="id48">
+<h3>Group Membership<a class="headerlink" href="#id48" title="Link to this heading"></a></h3>
+<p>This section displays stats about Active Directory security groups the user
+belongs to:</p>
+<ul class="simple">
+<li><p><strong>First Degree Group Memberships</strong>:  The AzureAD security groups the service principal is
+directly added to.</p></li>
+<li><p><strong>Unrolled Group Membership</strong>: Groups that are added to groups in AzureAD.</p></li>
+</ul>
+</section>
+<section id="id49">
+<h3>Outbound Object Control<a class="headerlink" href="#id49" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>First Degree Object Control</strong>: The number of objects where this service principal has direct control of in AzureAD and Azure resources.</p></li>
+<li><p><strong>Group Delegated Object Control</strong>: The number of objects in AzureAD and Azure resources where the group the service principal is assigned to has direct control over.</p></li>
+<li><p><strong>Transitive Object Control</strong>: The number of objects this service principal can gain control of by performing object-control attack paths</p></li>
+</ul>
+</section>
+<section id="id50">
+<h3>Inbound Object Control<a class="headerlink" href="#id50" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Object Controllers</strong>: The number of principals that have direct control of this service principal.</p></li>
+<li><p><strong>Unrolled Object Controllers</strong>: The number of principals that have
+control of this object through Azure group delegation.</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: The number of objects in AD that can achieve
+control of this object through object-control attack paths</p></li>
+</ul>
+</section>
+</section>
+<section id="azautomationaccount">
+<h2>AZAutomationAccount<a class="headerlink" href="#azautomationaccount" title="Link to this heading"></a></h2>
+<p>Automation Accounts are one of several services falling under the umbrella of “Azure Automation”. Azure admins can use Automation Accounts to automate a variety of business operations, such as creating and configuring Virtual Machines in Azure.</p>
+<p>Automation Accounts offer different process automation services, but at the core of all those services are what are called Runbooks.</p>
+<p>Read more about how attackers abuse Automation Accounts in this blog post: <a class="reference external" href="https://medium.com/p/82667d17187a">https://medium.com/p/82667d17187a</a></p>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>NAME</strong>: The full name of the asset</p></li>
+</ul>
+<section id="id51">
+<h3>Overview<a class="headerlink" href="#id51" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>See asset within Tenant</strong>: Unrolls the asset’s membership within Azure, displaying the asset’s resource group &amp; subscription.</p></li>
+<li><p><strong>Managed Identities</strong>: Shows the assigned managed identity service principals for the asset.</p></li>
+</ul>
+</section>
+<section id="id52">
+<h3>Node Properties<a class="headerlink" href="#id52" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The Azure objectid for the asset.</p></li>
+</ul>
+</section>
+<section id="id53">
+<h3>Extra Properties<a class="headerlink" href="#id53" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>tenantid</strong>: The Azure tenant ID for the asset.</p></li>
+</ul>
+</section>
+<section id="id54">
+<h3>Inbound Object Control<a class="headerlink" href="#id54" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Object Controllers</strong>: The number of principals that are in a role that has the ability to control this asset.</p></li>
+<li><p><strong>Unrolled Object Controllers</strong>: The actual number of principals that have control of this
+asset through security group delegation. This number can sometimes be wildly higher than
+the previous number.</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: The number of assets in Azure that can achieve control of this object through control attack paths.</p></li>
+</ul>
+</section>
+</section>
+<section id="azcontainerregistry">
+<h2>AZContainerRegistry<a class="headerlink" href="#azcontainerregistry" title="Link to this heading"></a></h2>
+<p>Azure Container Registry (ACR) is Microsoft’s implementation of the Open Container Initiative’s (OCI) Distribution Spec, which itself is based on the original Docker Registry protocol. In plain English: ACR stores and manages container images for you. ACR serves those images, making them available to run locally, on some remote system, or as an Azure Container Instance. You can think of ACR as being somewhat analogous to your very own Docker Registry.</p>
+<p>Read more about how attackers abuse Container Registries in this blog post: <a class="reference external" href="https://medium.com/p/1f407bfaa465">https://medium.com/p/1f407bfaa465</a></p>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>NAME</strong>: The full name of the asset</p></li>
+</ul>
+<section id="id55">
+<h3>Overview<a class="headerlink" href="#id55" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>See asset within Tenant</strong>: Unrolls the asset’s membership within Azure, displaying the asset’s resource group &amp; subscription.</p></li>
+<li><p><strong>Managed Identities</strong>: Shows the assigned managed identity service principals for the asset.</p></li>
+</ul>
+</section>
+<section id="id56">
+<h3>Node Properties<a class="headerlink" href="#id56" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The Azure objectid for the asset.</p></li>
+</ul>
+</section>
+<section id="id57">
+<h3>Extra Properties<a class="headerlink" href="#id57" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>tenantid</strong>: The Azure tenant ID for the asset.</p></li>
+</ul>
+</section>
+<section id="id58">
+<h3>Inbound Object Control<a class="headerlink" href="#id58" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Object Controllers</strong>: The number of principals that are in a role that has the ability to control this asset.</p></li>
+<li><p><strong>Unrolled Object Controllers</strong>: The actual number of principals that have control of this
+asset through security group delegation. This number can sometimes be wildly higher than
+the previous number.</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: The number of assets in Azure that can achieve control of this object through control attack paths.</p></li>
+</ul>
+</section>
+</section>
+<section id="azfunctionapp">
+<h2>AZFunctionApp<a class="headerlink" href="#azfunctionapp" title="Link to this heading"></a></h2>
+<p>Functions are one of several services falling under the umbrella of “Azure Automation”. Azure admins can create functions using a variety of language (C#, Java, PowerShell, etc.), then run those functions on-demand in Azure. Functions are hosted and grouped together in Azure using Function Apps.</p>
+<p>Read more about how attackers abuse Function Apps in this blog post: <a class="reference external" href="https://medium.com/p/300065251cbe">https://medium.com/p/300065251cbe</a></p>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>NAME</strong>: The full name of the asset</p></li>
+</ul>
+<section id="id59">
+<h3>Overview<a class="headerlink" href="#id59" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>See asset within Tenant</strong>: Unrolls the asset’s membership within Azure, displaying the asset’s resource group &amp; subscription.</p></li>
+<li><p><strong>Managed Identities</strong>: Shows the assigned managed identity service principals for the asset.</p></li>
+</ul>
+</section>
+<section id="id60">
+<h3>Node Properties<a class="headerlink" href="#id60" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The Azure objectid for the asset.</p></li>
+</ul>
+</section>
+<section id="id61">
+<h3>Extra Properties<a class="headerlink" href="#id61" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>tenantid</strong>: The Azure tenant ID for the asset.</p></li>
+</ul>
+</section>
+<section id="id62">
+<h3>Inbound Object Control<a class="headerlink" href="#id62" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Object Controllers</strong>: The number of principals that are in a role that has the ability to control this asset.</p></li>
+<li><p><strong>Unrolled Object Controllers</strong>: The actual number of principals that have control of this
+asset through security group delegation. This number can sometimes be wildly higher than
+the previous number.</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: The number of assets in Azure that can achieve control of this object through control attack paths.</p></li>
+</ul>
+</section>
+</section>
+<section id="azlogicapp">
+<h2>AZLogicApp<a class="headerlink" href="#azlogicapp" title="Link to this heading"></a></h2>
+<p>Logic Apps are another Azure service falling under the general umbrella of “Azure Automation”. Admins can use Logic Apps to construct what are called “workflows”. Workflows are comprised of triggers and actions that occur as a result of those triggers.</p>
+<p>Read more about how attackers abuse Logic Apps in this blog post: <a class="reference external" href="https://medium.com/p/52b29354fc54">https://medium.com/p/52b29354fc54</a></p>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>NAME</strong>: The full name of the asset</p></li>
+</ul>
+<section id="id63">
+<h3>Overview<a class="headerlink" href="#id63" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>See asset within Tenant</strong>: Unrolls the asset’s membership within Azure, displaying the asset’s resource group &amp; subscription.</p></li>
+<li><p><strong>Managed Identities</strong>: Shows the assigned managed identity service principals for the asset.</p></li>
+</ul>
+</section>
+<section id="id64">
+<h3>Node Properties<a class="headerlink" href="#id64" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The Azure objectid for the asset.</p></li>
+</ul>
+</section>
+<section id="id65">
+<h3>Extra Properties<a class="headerlink" href="#id65" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>tenantid</strong>: The Azure tenant ID for the asset.</p></li>
+</ul>
+</section>
+<section id="id66">
+<h3>Inbound Object Control<a class="headerlink" href="#id66" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Object Controllers</strong>: The number of principals that are in a role that has the ability to control this asset.</p></li>
+<li><p><strong>Unrolled Object Controllers</strong>: The actual number of principals that have control of this
+asset through security group delegation. This number can sometimes be wildly higher than
+the previous number.</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: The number of assets in Azure that can achieve control of this object through control attack paths.</p></li>
+</ul>
+</section>
+</section>
+<section id="azmanagedcluster">
+<h2>AZManagedCluster<a class="headerlink" href="#azmanagedcluster" title="Link to this heading"></a></h2>
+<p>Azure Kubernetes Service Managed Clusters provide Azure admins an easy way to create and maintain Kubernetes clusters.</p>
+<p>Read about how attackers abuse AKS Managed Clusters in this blog post: <a class="reference external" href="https://www.netspi.com/blog/technical/cloud-penetration-testing/extract-credentials-from-azure-kubernetes-service/">https://www.netspi.com/blog/technical/cloud-penetration-testing/extract-credentials-from-azure-kubernetes-service/</a></p>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>NAME</strong>: The full name of the asset</p></li>
+</ul>
+<section id="id67">
+<h3>Overview<a class="headerlink" href="#id67" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>See asset within Tenant</strong>: Unrolls the asset’s membership within Azure, displaying the asset’s resource group &amp; subscription.</p></li>
+<li><p><strong>Managed Identities</strong>: Shows the assigned managed identity service principals for the asset.</p></li>
+</ul>
+</section>
+<section id="id68">
+<h3>Node Properties<a class="headerlink" href="#id68" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The Azure objectid for the asset.</p></li>
+</ul>
+</section>
+<section id="id69">
+<h3>Extra Properties<a class="headerlink" href="#id69" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>tenantid</strong>: The Azure tenant ID for the asset.</p></li>
+</ul>
+</section>
+<section id="id70">
+<h3>Inbound Object Control<a class="headerlink" href="#id70" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Object Controllers</strong>: The number of principals that are in a role that has the ability to control this asset.</p></li>
+<li><p><strong>Unrolled Object Controllers</strong>: The actual number of principals that have control of this
+asset through security group delegation. This number can sometimes be wildly higher than
+the previous number.</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: The number of assets in Azure that can achieve control of this object through control attack paths.</p></li>
+</ul>
+</section>
+</section>
+<section id="azvmscaleset">
+<h2>AZVMScaleSet<a class="headerlink" href="#azvmscaleset" title="Link to this heading"></a></h2>
+<p>Azure Virtual Machine Scale Sets are used by AKS Managed Clusters to spin up and spin down compute nodes. They can also by used by admins to spin up and manage virtual machines outside of the AKS use-case.</p>
+<p>Read about how attackers abuse Virtual Machine Scale Sets in this blog post: <a class="reference external" href="https://www.netspi.com/blog/technical/cloud-penetration-testing/extract-credentials-from-azure-kubernetes-service/">https://www.netspi.com/blog/technical/cloud-penetration-testing/extract-credentials-from-azure-kubernetes-service/</a></p>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>NAME</strong>: The full name of the asset</p></li>
+</ul>
+<section id="id71">
+<h3>Overview<a class="headerlink" href="#id71" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>See asset within Tenant</strong>: Unrolls the asset’s membership within Azure, displaying the asset’s resource group &amp; subscription.</p></li>
+<li><p><strong>Managed Identities</strong>: Shows the assigned managed identity service principals for the asset.</p></li>
+</ul>
+</section>
+<section id="id72">
+<h3>Node Properties<a class="headerlink" href="#id72" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The Azure objectid for the asset.</p></li>
+</ul>
+</section>
+<section id="id73">
+<h3>Extra Properties<a class="headerlink" href="#id73" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>tenantid</strong>: The Azure tenant ID for the asset.</p></li>
+</ul>
+</section>
+<section id="id74">
+<h3>Inbound Object Control<a class="headerlink" href="#id74" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Object Controllers</strong>: The number of principals that are in a role that has the ability to control this asset.</p></li>
+<li><p><strong>Unrolled Object Controllers</strong>: The actual number of principals that have control of this
+asset through security group delegation. This number can sometimes be wildly higher than
+the previous number.</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: The number of assets in Azure that can achieve control of this object through control attack paths.</p></li>
+</ul>
+</section>
+</section>
+<section id="azwebapp">
+<h2>AzWebApp<a class="headerlink" href="#azwebapp" title="Link to this heading"></a></h2>
+<p>Azure App Service is a Platform-as-a-Service product that promises to improve web application deployment, hosting, availability, and security. Web Apps hosted by Azure App Service are organized into Azure App Service Plans, which are Virtual Machines that the Web Apps in that plan all run on.</p>
+<p>Read more about how attackers abuse Web Apps in this blog post: <a class="reference external" href="https://medium.com/p/c3adefccff95">https://medium.com/p/c3adefccff95</a></p>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>NAME</strong>: The full name of the asset</p></li>
+</ul>
+<section id="id75">
+<h3>Overview<a class="headerlink" href="#id75" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>See asset within Tenant</strong>: Unrolls the asset’s membership within Azure, displaying the asset’s resource group &amp; subscription.</p></li>
+<li><p><strong>Managed Identities</strong>: Shows the assigned managed identity service principals for the asset.</p></li>
+</ul>
+</section>
+<section id="id76">
+<h3>Node Properties<a class="headerlink" href="#id76" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The Azure objectid for the asset.</p></li>
+</ul>
+</section>
+<section id="id77">
+<h3>Extra Properties<a class="headerlink" href="#id77" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>tenantid</strong>: The Azure tenant ID for the asset.</p></li>
+</ul>
+</section>
+<section id="id78">
+<h3>Inbound Object Control<a class="headerlink" href="#id78" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Object Controllers</strong>: The number of principals that are in a role that has the ability to control this asset.</p></li>
+<li><p><strong>Unrolled Object Controllers</strong>: The actual number of principals that have control of this
+asset through security group delegation. This number can sometimes be wildly higher than
+the previous number.</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: The number of assets in Azure that can achieve control of this object through control attack paths.</p></li>
+</ul>
+</section>
+</section>
+<section id="azmanagementgroup">
+<h2>AzManagementGroup<a class="headerlink" href="#azmanagementgroup" title="Link to this heading"></a></h2>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>NAME</strong>: The full name of the asset</p></li>
+</ul>
+<section id="id79">
+<h3>Overview<a class="headerlink" href="#id79" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Reachable High Value Targets</strong>: The count of how many high value
+targets this asset has an attack path to. Click this number to see the shortest attack paths from this asset
+to those high value targets.</p></li>
+</ul>
+</section>
+<section id="id80">
+<h3>Node Properties<a class="headerlink" href="#id80" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The Azure objectid for the asset.</p></li>
+<li><p><strong>Tenant ID</strong>: The Azure tenant ID for the asset.</p></li>
+</ul>
+</section>
+<section id="id81">
+<h3>Extra Properties<a class="headerlink" href="#id81" title="Link to this heading"></a></h3>
+<p>No extra properties.</p>
+</section>
+<section id="id82">
+<h3>Descendent Objects<a class="headerlink" href="#id82" title="Link to this heading"></a></h3>
+<p>The number of assets under this asset categorized in Azure asset types.</p>
+</section>
+<section id="id83">
+<h3>Inbound Object Control<a class="headerlink" href="#id83" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Object Controllers</strong>: The number of principals that are in a role that has the ability to control this asset.</p></li>
+<li><p><strong>Unrolled Object Controllers</strong>: The actual number of principals that have control of this
+asset through security group delegation. This number can sometimes be wildly higher than
+the previous number.</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: The number of assets in Azure that can achieve control of this object through control attack paths.</p></li>
+</ul>
+</section>
+</section>
+<section id="azrole">
+<h2>AzRole<a class="headerlink" href="#azrole" title="Link to this heading"></a></h2>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>NAME</strong>: The full name of the role</p></li>
+</ul>
+<section id="id84">
+<h3>Node Properties<a class="headerlink" href="#id84" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The Azure objectid for the role.</p></li>
+<li><p><strong>Display Name</strong>: The display name of the role.</p></li>
+<li><p><strong>Enabled</strong>: Whether the role is enabled or disabled.</p></li>
+<li><p><strong>Description</strong>: Description of the role.</p></li>
+<li><p><strong>Template ID</strong>: Template ID of the role.</p></li>
+<li><p><strong>Tenant ID</strong>: The Azure tenant ID for the role.</p></li>
+</ul>
+</section>
+<section id="id85">
+<h3>Extra Properties<a class="headerlink" href="#id85" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>isbuiltin</strong>: Whether the role is an Azure built-in role or custom.</p></li>
+</ul>
+</section>
+<section id="assignments">
+<h3>Assignments<a class="headerlink" href="#assignments" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Active Assignments</strong>: The assets with this role actively assigned.</p></li>
+</ul>
+</section>
+</section>
+<section id="azkeyvault">
+<h2>AZKeyVault<a class="headerlink" href="#azkeyvault" title="Link to this heading"></a></h2>
+<p>At the top of the node info tab you will see the following info:</p>
+<ul class="simple">
+<li><p><strong>NAME</strong>: The full name of the asset</p></li>
+</ul>
+<section id="id86">
+<h3>Node Properties<a class="headerlink" href="#id86" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Object ID</strong>: The Azure objectid for the asset.</p></li>
+<li><p><strong>Enable RBAC Authorization</strong>: Whether the Key Vault has RBAC authorization enabled or not.</p></li>
+<li><p><strong>Tenant ID</strong>: The Azure tenant ID for the asset.</p></li>
+</ul>
+</section>
+<section id="vault-readers">
+<h3>Vault Readers<a class="headerlink" href="#vault-readers" title="Link to this heading"></a></h3>
+<p>The number of assets that can read keys, certificates, and secrets in the Key Vault.</p>
+</section>
+<section id="id87">
+<h3>Inbound Object Control<a class="headerlink" href="#id87" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Explicit Object Controllers</strong>: The number of principals that are in a role that has the ability to control this asset.</p></li>
+<li><p><strong>Unrolled Object Controllers</strong>: The actual number of principals that have control of this
+asset through security group delegation. This number can sometimes be wildly higher than
+the previous number.</p></li>
+<li><p><strong>Transitive Object Controllers</strong>: The number of assets in Azure that can achieve control of this object through control attack paths.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="bloodhound-gui.html" class="btn btn-neutral float-left" title="The BloodHound GUI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="edges.html" class="btn btn-neutral float-right" title="Edges" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2023, Specter Ops Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

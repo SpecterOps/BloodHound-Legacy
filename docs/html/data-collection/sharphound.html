@@ -1,0 +1,289 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="https://bloodhound.specterops.io/collect-data/ce-collection/sharphound" name="canonical" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SharpHound &mdash; BloodHound 4.3.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=232b7ae2" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=0503a316"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="All SharpHound Flags, Explained" href="sharphound-all-flags.html" />
+    <link rel="prev" title="Linux" href="../installation/linux.html" />
+   
+  
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            BloodHound
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/windows.html">Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/osx.html">macOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/linux.html">Linux</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data Collection</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SharpHound</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-session-loop-collection-method">The Session Loop Collection Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-sharphound-from-a-non-domain-joined-system">Running SharpHound from a Non Domain-Joined System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-sharphound-from-source">Building SharpHound from Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sharphound-vs-antivirus">SharpHound vs. Antivirus</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sharphound-all-flags.html">All SharpHound Flags, Explained</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azurehound.html">AzureHound</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azurehound-all-flags.html">All AzureHound Flags, Explained</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bloodhound-py.html">BloodHound.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data Analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../data-analysis/bloodhound-gui.html">The BloodHound GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-analysis/nodes.html">Nodes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-analysis/edges.html">Edges</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Further Reading/Viewing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../further-reading/further-reading.html">Further Reading/Viewing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../further-reading/json.html">BloodHound JSON Formats</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BloodHound</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">SharpHound</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/data-collection/sharphound.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="deprecated admonition">
+<p class="admonition-title">Deprecated Documentation</p>
+<p><strong>This documentation refers to deprecated BloodHound Legacy (version 4.3, released in 2023).</strong></p>
+<p>Please use the <a class="reference external" href="https://bloodhound.specterops.io/collect-data/ce-collection/sharphound">current BloodHound CE Documentation</a>.</p>
+</div>
+<section id="sharphound">
+<h1>SharpHound<a class="headerlink" href="#sharphound" title="Link to this heading"></a></h1>
+<p>SharpHound is the official data collector for BloodHound. It is written
+in C# and uses native Windows API functions and LDAP namespace functions
+to collect data from domain controllers and domain-joined Windows systems.</p>
+<p>Download the pre-compiled SharpHound binary and PS1 version at
+<a class="reference external" href="https://github.com/BloodHoundAD/BloodHound/tree/master/Collectors">https://github.com/BloodHoundAD/BloodHound/tree/master/Collectors</a></p>
+<p>You can view the source code for SharpHound and build it from source
+by visiting the SharpHound repo at <a class="reference external" href="https://github.com/BloodHoundAD/SharpHound">https://github.com/BloodHoundAD/SharpHound</a></p>
+<section id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h2>
+<p>You can collect plenty of data with SharpHound by simply running the binary
+itself with no flags set:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">SharpHound</span><span class="o">.</span><span class="n">exe</span>
+</pre></div>
+</div>
+<p>SharpHound will automatically determine what domain your current user
+belongs to, find a domain controller for that domain, and start the
+“default” collection method. The default collection method will collect the
+following pieces of information from the domain controller:</p>
+<ul class="simple">
+<li><p>Security group memberships</p></li>
+<li><p>Domain trusts</p></li>
+<li><p>Abusable rights on Active Directory objects</p></li>
+<li><p>Group Policy links</p></li>
+<li><p>OU tree structure</p></li>
+<li><p>Several properties from computer, group and user objects</p></li>
+<li><p>SQL admin links</p></li>
+</ul>
+<p>Additionally, SharpHound will attempt to collect the following information
+from each domain-joined Windows computer:</p>
+<ul class="simple">
+<li><p>The members of the local administrators, remote desktop, distributed COM,
+and remote management groups</p></li>
+<li><p>Active sessions, which SharpHound will attempt to correlate to systems
+where users are interactively logged on</p></li>
+</ul>
+<p>When finished, SharpHound will create several JSON files and place them into
+a zip file. Drag and drop that zip file into the BloodHound GUI and the
+interface will take care of merging the data into the database.</p>
+</section>
+<section id="the-session-loop-collection-method">
+<h2>The Session Loop Collection Method<a class="headerlink" href="#the-session-loop-collection-method" title="Link to this heading"></a></h2>
+<p>BloodHound uses graph theory to find attack paths in Active Directory, and
+the more data you have, the more likely you are to find and execute attack
+paths successfully. Much of the data you initially collect with SharpHound
+will not likely change or require updating over the course of a typical red
+team assessment - security group memberships, Active Directory permissions,
+and Group Policy links change relatively rarely. That data can be collected
+one time, and not again.</p>
+<p>User sessions are different for two reasons:</p>
+<p>1. Users, especially privileged users, log on and off different systems all
+day, every day. How many systems does a typical help desk user or server
+admin log into on any given day?</p>
+<p>2. The <a class="reference external" href="https://www.youtube.com/watch?v=q86VgM2Tafc">way SharpHound’s data collection works</a> necessitates scanning the
+network several times to get more complete session information. Scannning
+the network one time for user sessions may give you between 5 and 15% of
+the actual sessions on the network.</p>
+<p>When you use the path finding function query in BloodHound to find a path
+between two nodes and see that there is no path, 9 times out of 10 this is
+because BloodHound needs more session data.</p>
+<p>SharpHound’s Session Loop collection method makes this very easy:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">SharpHound</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">CollectionMethods</span> <span class="n">Session</span> <span class="o">--</span><span class="n">Loop</span>
+</pre></div>
+</div>
+<p>This will run SharpHound’s session collection method for 2 hours, generating
+a zip file after each loop ends. When done, collect all the zip files and
+drag and drop them into the BloodHound GUI.</p>
+<p>If you would like to specify a different loop time, use the –Loopduration
+flag with the HH:MM:SS format to specify how long you want SharpHound to
+perform looped session collection for. For example, if you want SharpHound
+to perform looped session collection for 3 hours, 9 minutes and 41 seconds:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">SharpHound</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">CollectionMethods</span> <span class="n">Session</span> <span class="o">--</span><span class="n">Loop</span> <span class="o">--</span><span class="n">Loopduration</span> <span class="mi">03</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mi">41</span>
+</pre></div>
+</div>
+</section>
+<section id="running-sharphound-from-a-non-domain-joined-system">
+<h2>Running SharpHound from a Non Domain-Joined System<a class="headerlink" href="#running-sharphound-from-a-non-domain-joined-system" title="Link to this heading"></a></h2>
+<p>While not an officially supported collection method, and not a colletion
+method we recommend you do, it is possible to collect data for a domain
+from a system that is not joined to that domain. To do so, carefully follow
+these steps:</p>
+<p>1. Configure your system DNS server to be the IP address of a domain controller
+in the target domain.</p>
+<p>2. Spawn a CMD shell as a user in that domain using <cite>runas</cite> and its <cite>/netonly</cite>
+flag, like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">runas</span> <span class="o">/</span><span class="n">netonly</span> <span class="o">/</span><span class="n">user</span><span class="p">:</span><span class="n">CONTOSO</span>\<span class="n">Jeff</span><span class="o">.</span><span class="n">Dimmock</span> <span class="n">cmd</span><span class="o">.</span><span class="n">exe</span>
+</pre></div>
+</div>
+<p>You will be prompted to enter a password. Enter the password and hit enter.</p>
+<p>3. A new CMD window will appear. If you type <cite>whoami</cite>, you will not see the
+name of the user you’re impersonating. This is because of the <cite>/netonly</cite> flag:
+the instance of CMD will only authenticate as that user when you authenticate
+to other systems over the network, but you are still the same user you were
+before when authenticating locally.</p>
+<ol class="arabic simple" start="4">
+<li><p>Verify you’ve got valid domain authentiation by using the <cite>net</cite> binary:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">net</span> <span class="n">view</span> \\<span class="n">contoso</span>\
+</pre></div>
+</div>
+<p>If you can see the SYSVOL and NETLOGON folders, you’re good.</p>
+<p>5. Run SharpHound, using the <cite>-d</cite> flag to specify the AD domain you want to
+collect information from. You can also use any other flags you wish.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">SharpHound</span><span class="o">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">d</span> <span class="n">contoso</span><span class="o">.</span><span class="n">local</span>
+</pre></div>
+</div>
+</section>
+<section id="building-sharphound-from-source">
+<h2>Building SharpHound from Source<a class="headerlink" href="#building-sharphound-from-source" title="Link to this heading"></a></h2>
+<p>SharpHound is written using C# 9.0 features. To easily compile this project,
+use Visual Studio 2019.</p>
+<p>If you would like to compile on previous versions of Visual Studio, you can
+install the Microsoft.Net.Compilers nuget package.</p>
+<p>Building the project will generate an executable as well as a PowerShell
+script that encapsulates the executable. All dependencies are rolled into the binary.</p>
+</section>
+<section id="sharphound-vs-antivirus">
+<h2>SharpHound vs. Antivirus<a class="headerlink" href="#sharphound-vs-antivirus" title="Link to this heading"></a></h2>
+<p>Many anti-virus engines have signatures for SharpHound. You may even find that
+Chrome or other browsers will warn you against downloading SharpHound, saying
+the binary is malicious. This isn’t completely unexpected, as BloodHound is primarily
+a tool used by penetration testers and red teamers to find attack paths in Active
+Directory. While BloodHound has plenty of defensive value, antivirus and browser
+vendors continue to flag SharpHound as malicious.</p>
+<p>If you are on the red team side, you can employ some av-bypass strategies to
+avoid getting caught by AV. One of the best things you can do is stay completely
+off-disk when running SharpHound. Many command-and-control tools have in-memory
+.net assembly execution capabilities, such as Cobalt Strike’s <strong>execute-assembly</strong> and
+Covenant’s <strong>assembly</strong> commands. Using these commands will keep SharpHound totally
+off-disk when run on your target, which will go a very long way toward evading basic
+AV signatures.</p>
+<p>If you are on the blue team side, you can use the same AV bypass techniques used by
+the red team, or you can request an exception for the SharpHound binary itself or
+possibly a folder that you run SharpHound out of. Be aware though that AV excluded
+folders and files can commonly be enumerated by low-privilege users running on the
+same system, so try to be as specific as possible with your white-list exceptions.</p>
+<p>Finally, remember that SharpHound is free and <em>open source</em>. You can build SharpHound
+from source and apply your own obfuscation techniques to the source code itself during
+that build process. Several resources are available to help get started here:</p>
+<p><a class="reference external" href="https://docs.microsoft.com/en-us/visualstudio/ide/dotfuscator/?view=vs-2019">https://docs.microsoft.com/en-us/visualstudio/ide/dotfuscator/?view=vs-2019</a></p>
+<p><a class="reference external" href="https://github.com/TheWover/donut">https://github.com/TheWover/donut</a></p>
+<p><a class="reference external" href="https://blog.xpnsec.com/building-modifying-packing-devops/">https://blog.xpnsec.com/building-modifying-packing-devops/</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../installation/linux.html" class="btn btn-neutral float-left" title="Linux" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sharphound-all-flags.html" class="btn btn-neutral float-right" title="All SharpHound Flags, Explained" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2023, Specter Ops Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

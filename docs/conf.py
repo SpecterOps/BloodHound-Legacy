@@ -51,6 +51,17 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 #
 html_theme = 'sphinx_rtd_theme'
 
+# Canonical URL for SEO
+html_context = {
+    "canonical_url": "https://bloodhound.specterops.io/"
+}
+
+
+# Load custom CSS so that deprecated notice boxes are displayed in red 
+def setup(app):
+    app.add_css_file('css/custom.css')  # relative to _static/
+
+
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".

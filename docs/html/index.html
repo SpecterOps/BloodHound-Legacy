@@ -1,0 +1,208 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="https://bloodhound.specterops.io/home" name="canonical" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BloodHound: Six Degrees of Domain Admin &mdash; BloodHound 4.3.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=232b7ae2" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=0503a316"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Windows" href="installation/windows.html" />
+   
+  
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            BloodHound
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation/windows.html">Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation/osx.html">macOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation/linux.html">Linux</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data Collection</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="data-collection/sharphound.html">SharpHound</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-collection/sharphound-all-flags.html">All SharpHound Flags, Explained</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-collection/azurehound.html">AzureHound</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-collection/azurehound-all-flags.html">All AzureHound Flags, Explained</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-collection/bloodhound-py.html">BloodHound.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data Analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="data-analysis/bloodhound-gui.html">The BloodHound GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-analysis/nodes.html">Nodes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-analysis/edges.html">Edges</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Further Reading/Viewing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="further-reading/further-reading.html">Further Reading/Viewing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="further-reading/json.html">BloodHound JSON Formats</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">BloodHound</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">BloodHound: Six Degrees of Domain Admin</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="deprecated admonition">
+<p class="admonition-title">Deprecated Documentation</p>
+<p><strong>This documentation refers to deprecated BloodHound Legacy (version 4.3, released in 2023).</strong></p>
+<p>Please use the <a class="reference external" href="https://bloodhound.specterops.io/home">current BloodHound CE Documentation</a>.</p>
+</div>
+<section id="bloodhound-six-degrees-of-domain-admin">
+<h1>BloodHound: Six Degrees of Domain Admin<a class="headerlink" href="#bloodhound-six-degrees-of-domain-admin" title="Link to this heading"></a></h1>
+<a class="reference internal image-reference" href="_images/bloodhound-logo.png"><img alt="BloodHound logo" class="align-center" src="_images/bloodhound-logo.png" style="width: 300px;" />
+</a>
+<p>BloodHound uses graph theory to reveal the hidden and often unintended
+relationships within an Active Directory environment. As of version 4.0, BloodHound
+now also supports Azure. Attackers can use
+BloodHound to easily identify highly complex attack paths that would otherwise
+be impossible to quickly identify. Defenders can use BloodHound to identify
+and eliminate those same attack paths. Both blue and red teams can use
+BloodHound to easily gain a deeper understanding of privilege relationships in
+an Active Directory environment.</p>
+<section id="install">
+<h2>Install<a class="headerlink" href="#install" title="Link to this heading"></a></h2>
+<p>Depending on which operating system you’re using, install Neo4j, then
+download the BloodHound GUI. You can also build the BloodHound GUI from source.</p>
+<p>OS-specific instructions:
+<a class="reference internal" href="installation/windows.html"><span class="doc">Windows</span></a> |
+<a class="reference internal" href="installation/osx.html"><span class="doc">macOS</span></a> |
+<a class="reference internal" href="installation/linux.html"><span class="doc">Linux</span></a></p>
+</section>
+<section id="collect-your-first-dataset">
+<h2>Collect Your First Dataset<a class="headerlink" href="#collect-your-first-dataset" title="Link to this heading"></a></h2>
+<p>BloodHound is a data analysis tool and needs data to be useful. There are two
+officially supported data collection tools for BloodHound: SharpHound and
+AzureHound. Download AzureHound and/or SharpHound to collect your first data set. From a
+domain-joined system in your target Active Directory environnment, collecting
+your first dataset is quite simple:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">SharpHound</span><span class="o">.</span><span class="n">exe</span>
+</pre></div>
+</div>
+<p>Collecting your first data set with AzureHound:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">Import</span><span class="o">-</span><span class="n">Module</span> <span class="n">Az</span>
+<span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">Import</span><span class="o">-</span><span class="n">Module</span> <span class="n">AzureADPreview</span>
+<span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">Connect</span><span class="o">-</span><span class="n">AzureAD</span>
+<span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">Connect</span><span class="o">-</span><span class="n">AzAccount</span>
+<span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="o">.</span> <span class="o">.</span>\<span class="n">AzureHound</span><span class="o">.</span><span class="n">ps1</span>
+<span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">Invoke</span><span class="o">-</span><span class="n">AzureHound</span>
+</pre></div>
+</div>
+</section>
+<section id="import-and-explore-the-data">
+<h2>Import and Explore the Data<a class="headerlink" href="#import-and-explore-the-data" title="Link to this heading"></a></h2>
+<p>By default, SharpHound and AzureHound will generate several JSON files and place them into one
+zip. Drag and drop that zip into the BloodHound GUI, and BloodHound will import
+that data.</p>
+<p>Once complete, you’re ready to explore the data. Search for the Domain Users
+group using the search bar in the upper left. See if the Domain Users group has
+local admin rights anywhere, or control of any objects in Active Directory.</p>
+<p>Click the Pathfinding button (looks like a road) and search for Domain Admins
+in the box that drops below. See if there are any attack paths from Domain Users
+to Domain Admins.</p>
+<p>For a full tour of the BloodHound GUI and its data analysis capabilities, see
+the Data Analysis section.</p>
+</section>
+<section id="getting-help">
+<h2>Getting Help<a class="headerlink" href="#getting-help" title="Link to this heading"></a></h2>
+<p>Have a bug report or feature request? Open an issue on the <a class="reference external" href="https://www.github.com/BloodHoundAD/BloodHound">BloodHound repo</a></p>
+<p>Need assistance? Join us in the <a class="reference external" href="https://bloodhoundgang.herokuapp.com">BloodHound Gang Slack</a></p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation/windows.html" class="btn btn-neutral float-right" title="Windows" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2023, Specter Ops Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

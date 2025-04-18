@@ -1,0 +1,507 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="https://bloodhound.specterops.io/collect-data/ce-collection/sharphound-flags" name="canonical" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All SharpHound Flags, Explained &mdash; BloodHound 4.3.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=232b7ae2" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=0503a316"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="AzureHound" href="azurehound.html" />
+    <link rel="prev" title="SharpHound" href="sharphound.html" />
+   
+  
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            BloodHound
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/windows.html">Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/osx.html">macOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/linux.html">Linux</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data Collection</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sharphound.html">SharpHound</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">All SharpHound Flags, Explained</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#enumeration-options">Enumeration Options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#collectionmethods">CollectionMethods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#table-to-demonstrate-the-differences">Table to demonstrate the differences</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#domain">Domain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stealth">Stealth</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#computerfile">ComputerFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#searchbase">SearchBase</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ldapfilter">LDAPFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#excludedomaincontrollers">ExcludeDomainControllers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#realdnsname">RealDNSName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#overrideusername">OverrideUserName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#collectallproperties">CollectAllProperties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#windowsonly">WindowsOnly</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#output-options">Output Options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#outputdirectory">OutputDirectory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#outputprefix">OutputPrefix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nozip">NoZip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#encryptzip">EncryptZip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#zipfilename">ZipFileName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#randomizefilenames">RandomizeFilenames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#prettyjson">PrettyJson</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dumpcomputerstatus">DumpComputerStatus</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#loop-options">Loop Options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#loop">Loop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loopduration">LoopDuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loopinterval">LoopInterval</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#connection-options">Connection Options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#domaincontroller">DomainController</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ldapport">LdapPort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#secureldap">SecureLdap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ldapusername">LdapUsername</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ldappassword">LdapPassword</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#disablekerberossigning">DisableKerberosSigning</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#performance-options">Performance Options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#portscantimeout">PortScanTimeout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#skipportscan">SkipPortScan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#throttle">Throttle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jitter">Jitter</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cache-options">Cache Options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cachefilename">CacheFileName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nosavecache">NoSaveCache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#invalidatecache">InvalidateCache</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#deprecated-flags">Deprecated Flags</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#searchforest">SearchForest</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="azurehound.html">AzureHound</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azurehound-all-flags.html">All AzureHound Flags, Explained</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bloodhound-py.html">BloodHound.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data Analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../data-analysis/bloodhound-gui.html">The BloodHound GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-analysis/nodes.html">Nodes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-analysis/edges.html">Edges</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Further Reading/Viewing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../further-reading/further-reading.html">Further Reading/Viewing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../further-reading/json.html">BloodHound JSON Formats</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BloodHound</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">All SharpHound Flags, Explained</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/data-collection/sharphound-all-flags.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="deprecated admonition">
+<p class="admonition-title">Deprecated Documentation</p>
+<p><strong>This documentation refers to deprecated BloodHound Legacy (version 4.3, released in 2023).</strong></p>
+<p>Please use the <a class="reference external" href="https://bloodhound.specterops.io/collect-data/ce-collection/sharphound-flags">current BloodHound CE Documentation</a>.</p>
+</div>
+<section id="all-sharphound-flags-explained">
+<h1>All SharpHound Flags, Explained<a class="headerlink" href="#all-sharphound-flags-explained" title="Link to this heading"></a></h1>
+<p>SharpHound has several optional flags that let you control scan scope,
+performance, output, and other behaviors.</p>
+<section id="enumeration-options">
+<h2>Enumeration Options<a class="headerlink" href="#enumeration-options" title="Link to this heading"></a></h2>
+<section id="collectionmethods">
+<h3>CollectionMethods<a class="headerlink" href="#collectionmethods" title="Link to this heading"></a></h3>
+<p>This tells SharpHound what kind of data you want to collect. These are the most
+common options you’ll likely use:</p>
+<ul class="simple">
+<li><p><strong>Default:</strong> You can specify default collection, or don’t use the CollectionMethods
+option and this is what SharpHound will do. Default collection includes Active
+Directory security group membership, domain trusts, abusable permissions on AD
+objects, OU tree structure, Group Policy links, the most relevant AD object
+properties, local groups from domain-joined Windows systems, and user sessions.</p></li>
+<li><p><strong>All:</strong> Performs all collection methods except for <em>GPOLocalGroup</em>.</p></li>
+<li><p><strong>DCOnly:</strong> Collects data ONLY from the domain controller, will not touch other
+domain-joined Windows systems. Collects AD security group memberships, domain
+trusts, abusable permissions on AD objects, OU tree structure, Group Policy
+links, the most relevant AD object properties, and will attempt to correlate
+Group Policy-enforced local groups to affected computers.</p></li>
+<li><p><strong>ComputerOnly:</strong> Collects user sessions (<em>Session</em>) and local groups (<em>LocalGroup</em>)
+from domain-joined Windows systems. Will NOT collect the data collected with the DCOnly
+collection method.</p></li>
+<li><p><strong>Session:</strong> Just does user session collection. You will likely couple this with
+the –Loop option. See SharpHound examples below for more info on that.</p></li>
+<li><p><strong>LoggedOn:</strong> Does session collection using the privileged collection method. Use
+this if you are running as a user with local admin rights on lots of systems
+for the best user session data.</p></li>
+</ul>
+<p>Here are the less common CollectionMethods and what they do:</p>
+<ul class="simple">
+<li><p><strong>Group:</strong> Just collect security group memberships from Active Directory</p></li>
+<li><p><strong>ACL:</strong> Just collect abusable permissions on objects in Active Directory</p></li>
+<li><p><strong>GPOLocalGroup:</strong> Just attempt GPO to computer correlation to determine members
+of the relevant local groups on each computer in the domain. Doesn’t actually
+touch domain-joined systems, just gets info from domain controllers</p></li>
+<li><p><strong>Trusts:</strong> Just collect domain trusts</p></li>
+<li><p><strong>Container:</strong> Just collect the OU tree structure and Group Policy links</p></li>
+<li><p><strong>LocalGroup:</strong> Just collect the members of all interesting local groups on
+each domain-joined computer. Equivalent for <em>LocalAdmin</em> + <em>RDP</em> + <em>DCOM</em> +
+<em>PSRemote</em></p></li>
+<li><p><strong>LocalAdmin:</strong> Just collect the members of the local Administrators group on
+each domain-joined computer</p></li>
+<li><p><strong>RDP:</strong> Just collect the members of the Remote Desktop Users group on each
+domain-joined computer</p></li>
+<li><p><strong>DCOM:</strong> Just collect the members of the Distributed COM Users group on each
+domain-joined computer</p></li>
+<li><p><strong>PSRemote:</strong> Just collect the members of the Remote Management group on each
+domain-joined computer</p></li>
+<li><p><strong>ObjectProps</strong> - Performs Object Properties collection for properties
+such as LastLogon or PwdLastSet</p></li>
+</ul>
+</section>
+<section id="table-to-demonstrate-the-differences">
+<h3>Table to demonstrate the differences<a class="headerlink" href="#table-to-demonstrate-the-differences" title="Link to this heading"></a></h3>
+<a class="reference internal image-reference" href="../_images/SharpHoundCheatSheet.png"><img alt="SharpHound Cheat Sheet" class="align-center" src="../_images/SharpHoundCheatSheet.png" style="width: 900px;" />
+</a>
+<p>Image credit: <a class="reference external" href="https://twitter.com/SadProcessor">https://twitter.com/SadProcessor</a></p>
+</section>
+<section id="domain">
+<h3>Domain<a class="headerlink" href="#domain" title="Link to this heading"></a></h3>
+<p>Tell SharpHound which Active Directory domain you want to gather information from.
+Importantly, you must be able to resolve DNS in that domain for SharpHound to work
+correctly. For example, to collect data from the Contoso.local domain:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">SharpHound</span><span class="o">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">d</span> <span class="n">contoso</span><span class="o">.</span><span class="n">local</span>
+</pre></div>
+</div>
+</section>
+<section id="stealth">
+<h3>Stealth<a class="headerlink" href="#stealth" title="Link to this heading"></a></h3>
+<p>Perform “stealth” data collection. This switch modifies your data collection
+method. For example, if you want to perform user session collection, but only
+touch systems that are the most likely to have user session data:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">SharpHound</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">CollectionMethods</span> <span class="n">Session</span> <span class="o">--</span><span class="n">Stealth</span>
+</pre></div>
+</div>
+</section>
+<section id="computerfile">
+<h3>ComputerFile<a class="headerlink" href="#computerfile" title="Link to this heading"></a></h3>
+<p>Load a list of computer names or IP addresses for SharpHound to collect information
+from. The file should be line-separated.</p>
+</section>
+<section id="searchbase">
+<h3>SearchBase<a class="headerlink" href="#searchbase" title="Link to this heading"></a></h3>
+<p>Base DistinguishedName to start search at. Use this to limit your search.
+Equivalent to the old –OU option</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">SharpHound</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">SearchBase</span> <span class="s2">&quot;OU=New York,DC=Contoso,DC=Local&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="ldapfilter">
+<h3>LDAPFilter<a class="headerlink" href="#ldapfilter" title="Link to this heading"></a></h3>
+<p>Instruct SharpHound to only collect information from principals that match a given
+LDAP filter. For example, to only gather abusable ACEs from objects in a certain
+OU, do this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">SharpHound</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">LDAPFilter</span> <span class="s2">&quot;(CN=*,OU=New York,DC=Contoso,DC=Local)&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="excludedomaincontrollers">
+<h3>ExcludeDomainControllers<a class="headerlink" href="#excludedomaincontrollers" title="Link to this heading"></a></h3>
+<p><cite>–ExcludeDCs</cite> will instruct SharpHound to not touch domain controllers. By not touching
+domain controllers, you will not be able to collect anything specified in the
+<cite>DCOnly</cite> collection method, but you will also likely avoid detection by Microsoft
+ATA.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">SharpHound</span><span class="o">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">d</span> <span class="n">contoso</span><span class="o">.</span><span class="n">local</span> <span class="o">--</span><span class="n">ExcludeDCs</span>
+</pre></div>
+</div>
+</section>
+<section id="realdnsname">
+<h3>RealDNSName<a class="headerlink" href="#realdnsname" title="Link to this heading"></a></h3>
+<p>In some networks, DNS is not controlled by Active Directory, or is otherwise
+not syncrhonized to Active Directory. This causes issues when a computer joined
+to AD has an AD FQDN of COMPUTER.CONTOSO.LOCAL, but also has a DNS FQDN of, for
+example, COMPUTER.COMPANY.COM. You can help SharpHound find systems in DNS by
+providing the latter DNS suffix, like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">SharpHound</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">RealDNSName</span> <span class="n">COMPANY</span><span class="o">.</span><span class="n">COM</span>
+</pre></div>
+</div>
+</section>
+<section id="overrideusername">
+<h3>OverrideUserName<a class="headerlink" href="#overrideusername" title="Link to this heading"></a></h3>
+<p>When running SharpHound from a <cite>runas /netonly</cite>-spawned command shell, you may
+need to let SharpHound know what username you are authenticating to other systems
+as.</p>
+</section>
+<section id="collectallproperties">
+<h3>CollectAllProperties<a class="headerlink" href="#collectallproperties" title="Link to this heading"></a></h3>
+<p>Collect every LDAP property where the value is a string from each enumerated
+Active Directory object.</p>
+</section>
+<section id="windowsonly">
+<h3>WindowsOnly<a class="headerlink" href="#windowsonly" title="Link to this heading"></a></h3>
+<p>Limit computer collection to systems with an operating system that matches <em>Windows</em></p>
+</section>
+</section>
+<section id="output-options">
+<h2>Output Options<a class="headerlink" href="#output-options" title="Link to this heading"></a></h2>
+<section id="outputdirectory">
+<h3>OutputDirectory<a class="headerlink" href="#outputdirectory" title="Link to this heading"></a></h3>
+<p>By default, SharpHound will output zipped JSON files to the directory SharpHound
+was launched from. You can specify a different folder for SharpHound to write
+files to. For example, to instruct SharpHound to write output to C:temp:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">SharpHound</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">OutputDirectory</span> <span class="n">C</span><span class="p">:</span>\<span class="n">temp</span>\
+</pre></div>
+</div>
+</section>
+<section id="outputprefix">
+<h3>OutputPrefix<a class="headerlink" href="#outputprefix" title="Link to this heading"></a></h3>
+<p>Add a prefix to your JSON and ZIP files. For example, to have the JSON and ZIP
+file names start with “Financial Audit”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">SharpHound</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">OutputPrefix</span> <span class="s2">&quot;Financial Audit&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="nozip">
+<h3>NoZip<a class="headerlink" href="#nozip" title="Link to this heading"></a></h3>
+<p>Instruct SharpHound to <strong>not</strong> zip the JSON files when collection finishes.</p>
+</section>
+<section id="encryptzip">
+<h3>EncryptZip<a class="headerlink" href="#encryptzip" title="Link to this heading"></a></h3>
+<p>Add a randomly generated password to the zip file.</p>
+</section>
+<section id="zipfilename">
+<h3>ZipFileName<a class="headerlink" href="#zipfilename" title="Link to this heading"></a></h3>
+<p>Specify the name of the zip file</p>
+</section>
+<section id="randomizefilenames">
+<h3>RandomizeFilenames<a class="headerlink" href="#randomizefilenames" title="Link to this heading"></a></h3>
+<p>Randomize output file names</p>
+</section>
+<section id="prettyjson">
+<h3>PrettyJson<a class="headerlink" href="#prettyjson" title="Link to this heading"></a></h3>
+<p>Outputs JSON with indentation on multiple lines to improve readability.
+Tradeoff is increased file size.</p>
+</section>
+<section id="dumpcomputerstatus">
+<h3>DumpComputerStatus<a class="headerlink" href="#dumpcomputerstatus" title="Link to this heading"></a></h3>
+<p>Dumps error codes from connecting to computers</p>
+</section>
+</section>
+<section id="loop-options">
+<h2>Loop Options<a class="headerlink" href="#loop-options" title="Link to this heading"></a></h2>
+<section id="loop">
+<h3>Loop<a class="headerlink" href="#loop" title="Link to this heading"></a></h3>
+<p>Instruct SharpHound to loop computer-based collection methods. For example,
+attempt to collect local group memberships across all systems in a loop:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">SharpHound</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">CollectionMethods</span> <span class="n">LocalGroup</span> <span class="o">--</span><span class="n">Loop</span>
+</pre></div>
+</div>
+</section>
+<section id="loopduration">
+<h3>LoopDuration<a class="headerlink" href="#loopduration" title="Link to this heading"></a></h3>
+<p>By default, SharpHound will loop for 2 hours. You can specify whatever duration
+you like using the HH:MM:SS format. For example, to loop session collection for
+12 hours, 30 minutes and 12 seconds:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">SharpHound</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">CollectionMethods</span> <span class="n">Session</span> <span class="o">--</span><span class="n">Loop</span> <span class="o">--</span><span class="n">LoopDuration</span> <span class="mi">12</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">12</span>
+</pre></div>
+</div>
+</section>
+<section id="loopinterval">
+<h3>LoopInterval<a class="headerlink" href="#loopinterval" title="Link to this heading"></a></h3>
+<p>How long to pause for between loops, also given in HH:MM:SS format. For example,
+to loop session collection for 12 hours, 30 minutes and 12 seconds, with a 15
+minute interval between loops:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">SharpHound</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">CollectionMethods</span> <span class="n">Session</span> <span class="o">--</span><span class="n">Loop</span> <span class="o">--</span><span class="n">Loopduration</span> <span class="mi">12</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">12</span> <span class="o">--</span><span class="n">LoopInterval</span> <span class="mi">00</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">00</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="connection-options">
+<h2>Connection Options<a class="headerlink" href="#connection-options" title="Link to this heading"></a></h2>
+<section id="domaincontroller">
+<h3>DomainController<a class="headerlink" href="#domaincontroller" title="Link to this heading"></a></h3>
+<p>Target a specific domain controller by its IP address or name for LDAP collection</p>
+</section>
+<section id="ldapport">
+<h3>LdapPort<a class="headerlink" href="#ldapport" title="Link to this heading"></a></h3>
+<p>Specify an alternate port for LDAP if necessary</p>
+</section>
+<section id="secureldap">
+<h3>SecureLdap<a class="headerlink" href="#secureldap" title="Link to this heading"></a></h3>
+<p>Connect to the domain controller using LDAPS (secure LDAP) vs plain text LDAP.
+This will use port 636 instead of 389.</p>
+</section>
+<section id="ldapusername">
+<h3>LdapUsername<a class="headerlink" href="#ldapusername" title="Link to this heading"></a></h3>
+<p>Use with the LdapPassword parameter to provide alternate credentials to the domain
+controller when performing LDAP collection.</p>
+</section>
+<section id="ldappassword">
+<h3>LdapPassword<a class="headerlink" href="#ldappassword" title="Link to this heading"></a></h3>
+<p>Use with the LdapUsername parameter to provide alternate credentials to the domain
+controller when performing LDAP collection.</p>
+</section>
+<section id="disablekerberossigning">
+<h3>DisableKerberosSigning<a class="headerlink" href="#disablekerberossigning" title="Link to this heading"></a></h3>
+<p>Disables LDAP encryption. Not recommended.</p>
+</section>
+</section>
+<section id="performance-options">
+<h2>Performance Options<a class="headerlink" href="#performance-options" title="Link to this heading"></a></h2>
+<section id="portscantimeout">
+<h3>PortScanTimeout<a class="headerlink" href="#portscantimeout" title="Link to this heading"></a></h3>
+<p>When SharpHound is scanning a remote system to collect user sessions and local
+group memberships, it first checks to see if port 445 is open on that system.
+This helps speed up SharpHound collection by not attempting unnecessary function calls
+when systems aren’t even online. By default, SharpHound will wait 2000 milliseconds
+(2 seconds) to get a response when scanning 445 on the remote system. You can decrease
+this if you’re on a fast LAN, or increase it if you need to. For example, to tell
+SharpHound to wait just 1000 milliseconds (1 second) before skipping to the next host:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">SharpHound</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">PortScanTimeout</span> <span class="mi">1000</span>
+</pre></div>
+</div>
+</section>
+<section id="skipportscan">
+<h3>SkipPortScan<a class="headerlink" href="#skipportscan" title="Link to this heading"></a></h3>
+<p>Instruct SharpHound to not perform the port 445 check before attempting to enumerate
+information from a remote host. This can result in significantly slower collection
+periods.</p>
+</section>
+<section id="throttle">
+<h3>Throttle<a class="headerlink" href="#throttle" title="Link to this heading"></a></h3>
+<p>Adds a delay after each request to a computer. Value is in milliseconds (Default: 0)</p>
+</section>
+<section id="jitter">
+<h3>Jitter<a class="headerlink" href="#jitter" title="Link to this heading"></a></h3>
+<p>Adds a percentage jitter to throttle. (Default: 0)</p>
+</section>
+</section>
+<section id="cache-options">
+<h2>Cache Options<a class="headerlink" href="#cache-options" title="Link to this heading"></a></h2>
+<section id="cachefilename">
+<h3>CacheFileName<a class="headerlink" href="#cachefilename" title="Link to this heading"></a></h3>
+<p>SharpHound will create a local cache file to dramatically speed up data collection. It
+does this primarily by storing a map of principal names to SIDs and IPs to computer names.
+By default, SharpHound will auto-generate a name for the file, but you can use this flag
+to control what that name will be. For example, to name the cache file <cite>Accounting.bin</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">SharpHound</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">CacheFileName</span> <span class="n">Accounting</span><span class="o">.</span><span class="n">bin</span>
+</pre></div>
+</div>
+</section>
+<section id="nosavecache">
+<h3>NoSaveCache<a class="headerlink" href="#nosavecache" title="Link to this heading"></a></h3>
+<p>This will instruct SharpHound to NOT create the local cache file. Future enumeration
+will be slower than they would be with a cache file, but this will prevent SharpHound
+from putting the cache file on disk, which can help with AV and EDR evasion.</p>
+</section>
+<section id="invalidatecache">
+<h3>InvalidateCache<a class="headerlink" href="#invalidatecache" title="Link to this heading"></a></h3>
+<p>Invalidate the cache file and build a new cache</p>
+</section>
+</section>
+<section id="deprecated-flags">
+<h2>Deprecated Flags<a class="headerlink" href="#deprecated-flags" title="Link to this heading"></a></h2>
+<p>The following flags have been removed from SharpHound:</p>
+<section id="searchforest">
+<h3>SearchForest<a class="headerlink" href="#searchforest" title="Link to this heading"></a></h3>
+<p>This flag would instruct SharpHound to automatically collect data from all domains in
+your current forest. To collect data from other domains in your forest, use the <cite>nltest</cite>
+binary with its /domain_trusts flag to enumerate all domains in your current forest:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">nltest</span> <span class="o">/</span><span class="n">domain_trusts</span>
+</pre></div>
+</div>
+<p>Then specify each domain one-by-one with the <cite>–domain</cite> flag</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sharphound.html" class="btn btn-neutral float-left" title="SharpHound" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="azurehound.html" class="btn btn-neutral float-right" title="AzureHound" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2023, Specter Ops Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

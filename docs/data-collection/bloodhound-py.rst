@@ -1,9 +1,12 @@
-.. note::
-   This documentation applies to Legacy BloodHound and is no longer maintained.
+.. admonition:: Deprecated Documentation
+   :class: deprecated
 
-   See up-to-date documentation for BloodHound.py here: `BloodHound.py`_
+   **This documentation refers to deprecated BloodHound Legacy (version 4.3, released in 2023).** 
 
-.. _BloodHound.py: https://github.com/dirkjanm/BloodHound.py
+   Please use the `current BloodHound CE Documentation <https://bloodhound.specterops.io/get-started/introduction>`_.
+
+.. meta::
+   :canonical: https://bloodhound.specterops.io/get-started/introduction
 
 
 BloodHound.py

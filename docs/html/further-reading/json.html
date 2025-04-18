@@ -1,0 +1,841 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="https://bloodhound.specterops.io/integrations/bloodhound-api/working-with-api" name="canonical" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BloodHound JSON Formats &mdash; BloodHound 4.3.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=232b7ae2" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=0503a316"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Further Reading/Viewing" href="further-reading.html" />
+   
+  
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            BloodHound
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/windows.html">Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/osx.html">macOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/linux.html">Linux</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data Collection</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../data-collection/sharphound.html">SharpHound</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-collection/sharphound-all-flags.html">All SharpHound Flags, Explained</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-collection/azurehound.html">AzureHound</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-collection/azurehound-all-flags.html">All AzureHound Flags, Explained</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-collection/bloodhound-py.html">BloodHound.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data Analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../data-analysis/bloodhound-gui.html">The BloodHound GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-analysis/nodes.html">Nodes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-analysis/edges.html">Edges</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Further Reading/Viewing</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="further-reading.html">Further Reading/Viewing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">BloodHound JSON Formats</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-json-format">Basic JSON Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#object-formats">Object Formats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#users">Users</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#computers">Computers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#groups">Groups</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#domains">Domains</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gpos">GPOs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ous">OUs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BloodHound</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">BloodHound JSON Formats</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/further-reading/json.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="deprecated admonition">
+<p class="admonition-title">Deprecated Documentation</p>
+<p><strong>This documentation refers to deprecated BloodHound Legacy (version 4.3, released in 2023).</strong></p>
+<p>Please use the <a class="reference external" href="https://bloodhound.specterops.io/integrations/bloodhound-api/working-with-api">current BloodHound CE Documentation</a>.</p>
+</div>
+<section id="bloodhound-json-formats">
+<h1>BloodHound JSON Formats<a class="headerlink" href="#bloodhound-json-formats" title="Link to this heading"></a></h1>
+<p>Data exported by SharpHound is stored in JSON files. There are eight
+seperate JSON files that provide different data. The structure is
+documented here</p>
+<section id="basic-json-format">
+<h2>Basic JSON Format<a class="headerlink" href="#basic-json-format" title="Link to this heading"></a></h2>
+<p>All JSON files end with a meta tag that contains the number of objects in the file as well as the type of data in the file. The actual data is stored in an array with a key that matches the string in the meta tag.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;users&quot;</span><span class="p">:[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ADMIN@TESTLAB.LOCAL&quot;</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;meta&quot;</span><span class="p">:{</span>
+        <span class="s2">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;users&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;count&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="mi">3</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Possible types/meta tags are:
+* users
+* groups
+* ous
+* computers
+* gpos
+* domains</p>
+</section>
+<section id="object-formats">
+<h2>Object Formats<a class="headerlink" href="#object-formats" title="Link to this heading"></a></h2>
+<section id="users">
+<h3>Users<a class="headerlink" href="#users" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;Properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;highvalue&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ADMINISTRATOR@TESTLAB.LOCAL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;objectid&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-500&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;distinguishedname&quot;</span><span class="p">:</span> <span class="s2">&quot;CN=Administrator,CN=Users,DC=testlab,DC=local&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Built-in account for administering the computer/domain&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dontreqpreauth&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s2">&quot;passwordnotreqd&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s2">&quot;unconstraineddelegation&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s2">&quot;sensitive&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s2">&quot;pwdneverexpires&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s2">&quot;lastlogon&quot;</span><span class="p">:</span> <span class="mi">1579223741</span><span class="p">,</span>
+    <span class="s2">&quot;lastlogontimestamp&quot;</span><span class="p">:</span> <span class="mi">1578330279</span><span class="p">,</span>
+    <span class="s2">&quot;pwdlastset&quot;</span><span class="p">:</span> <span class="mi">1568654366</span><span class="p">,</span>
+    <span class="s2">&quot;serviceprincipalnames&quot;</span><span class="p">:</span> <span class="p">[],</span>
+       <span class="s2">&quot;hasspn&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+       <span class="s2">&quot;displayname&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+       <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+       <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+       <span class="s2">&quot;homedirectory&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s2">&quot;userpassword&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s2">&quot;admincount&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s2">&quot;sidhistory&quot;</span><span class="p">:</span> <span class="p">[]</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;AllowedToDelegate&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;SPNTargets&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;PrimaryGroupSid&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-513&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;HasSIDHistory&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;ObjectIdentifier&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-500&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Aces&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;Owner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteDacl&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteOwner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;ExtendedRight&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;GenericWrite&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteDacl&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteOwner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;ExtendedRight&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;GenericWrite&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-519&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteDacl&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-519&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteOwner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-519&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;ExtendedRight&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-519&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;GenericWrite&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="computers">
+<h3>Computers<a class="headerlink" href="#computers" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;Properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;haslaps&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s2">&quot;highvalue&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;PRIMARY.TESTLAB.LOCAL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;objectid&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-1001&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;distinguishedname&quot;</span><span class="p">:</span> <span class="s2">&quot;CN=PRIMARY,OU=Domain Controllers,DC=testlab,DC=local&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s2">&quot;unconstraineddelegation&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s2">&quot;serviceprincipalnames&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;Dfsr-12F9A27C-BF97-4787-9364-D31B6C55EB04/PRIMARY.testlab.local&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;ldap/PRIMARY.testlab.local/ForestDnsZones.testlab.local&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;ldap/PRIMARY.testlab.local/DomainDnsZones.testlab.local&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;DNS/PRIMARY.testlab.local&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;GC/PRIMARY.testlab.local/testlab.local&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RestrictedKrbHost/PRIMARY.testlab.local&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RestrictedKrbHost/PRIMARY&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RPC/a052f434-0629-458a-bd51-48118140ae3c._msdcs.testlab.local&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;HOST/PRIMARY/TESTLAB&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;HOST/PRIMARY.testlab.local/TESTLAB&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;HOST/PRIMARY&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;HOST/PRIMARY.testlab.local&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;HOST/PRIMARY.testlab.local/testlab.local&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;E3514235-4B06-11D1-AB04-00C04FC2DCD2/a052f434-0629-458a-bd51-48118140ae3c/testlab.local&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;ldap/PRIMARY/TESTLAB&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;ldap/a052f434-0629-458a-bd51-48118140ae3c._msdcs.testlab.local&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;ldap/PRIMARY.testlab.local/TESTLAB&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;ldap/PRIMARY&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;ldap/PRIMARY.testlab.local&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;ldap/PRIMARY.testlab.local/testlab.local&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;lastlogontimestamp&quot;</span><span class="p">:</span> <span class="mi">1583951963</span><span class="p">,</span>
+    <span class="s2">&quot;pwdlastset&quot;</span><span class="p">:</span> <span class="mi">1583951963</span><span class="p">,</span>
+    <span class="s2">&quot;operatingsystem&quot;</span><span class="p">:</span> <span class="s2">&quot;Windows Server 2012 R2 Standard Evaluation&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;AllowedToDelegate&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;AllowedToAct&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;PrimaryGroupSid&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-516&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Sessions&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;UserId&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-500&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;ComputerId&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-1001&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;LocalAdmins&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;MemberId&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-500&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;MemberType&quot;</span><span class="p">:</span> <span class="s2">&quot;User&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;MemberId&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-519&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;MemberType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;MemberId&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;MemberType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;RemoteDesktopUsers&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;DcomUsers&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;PSRemoteUsers&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;ObjectIdentifier&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-1001&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Aces&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;Owner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;GenericAll&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-519&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;GenericAll&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">true</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteDacl&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">true</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteOwner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">true</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;GenericWrite&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">true</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="groups">
+<h3>Groups<a class="headerlink" href="#groups" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;Properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;highvalue&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ADMINISTRATORS@TESTLAB.LOCAL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;objectid&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;distinguishedname&quot;</span><span class="p">:</span> <span class="s2">&quot;CN=Administrators,CN=Builtin,DC=testlab,DC=local&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Administrators have complete and unrestricted access to the computer/domain&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;admincount&quot;</span><span class="p">:</span> <span class="n">true</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;Members&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;MemberId&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;MemberType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;MemberId&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-519&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;MemberType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;MemberId&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-500&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;MemberType&quot;</span><span class="p">:</span> <span class="s2">&quot;User&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;ObjectIdentifier&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Aces&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;Owner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteDacl&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteOwner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;GenericWrite&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteDacl&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteOwner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;GenericWrite&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-519&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteDacl&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-519&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteOwner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-519&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;GenericWrite&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="domains">
+<h3>Domains<a class="headerlink" href="#domains" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;Properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;highvalue&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;objectid&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;distinguishedname&quot;</span><span class="p">:</span> <span class="s2">&quot;DC=testlab,DC=local&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s2">&quot;functionallevel&quot;</span><span class="p">:</span> <span class="s2">&quot;2012 R2&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;Users&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-2103&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-500&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-501&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-502&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-1105&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-2106&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-2107&quot;</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;Computers&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-2105&quot;</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;ChildOus&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;0DE400CD-2FF3-46E0-8A26-2C917B403C65&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;2A374493-816A-4193-BEFD-D2F4132C6DCA&quot;</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;Trusts&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;TargetDomainSid&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3084884204-958224920-2707782874&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsTransitive&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s2">&quot;TrustDirection&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+      <span class="s2">&quot;TrustType&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+      <span class="s2">&quot;SidFilteringEnabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s2">&quot;TargetDomainName&quot;</span><span class="p">:</span> <span class="s2">&quot;EXTERNAL.LOCAL&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;Links&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;IsEnforced&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s2">&quot;Guid&quot;</span><span class="p">:</span> <span class="s2">&quot;BE91688F-1333-45DF-93E4-4D2E8A36DE2B&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;RemoteDesktopUsers&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;LocalAdmins&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;DcomUsers&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;PSRemoteUsers&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;ObjectIdentifier&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Aces&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;Owner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteDacl&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteOwner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;ExtendedRight&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteDacl&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteOwner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;ExtendedRight&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;All&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-519&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;GenericAll&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-9&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;ExtendedRight&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;GetChanges&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;ExtendedRight&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;GetChangesAll&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;ExtendedRight&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;GetChanges&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-498&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;ExtendedRight&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;GetChanges&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-516&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;ExtendedRight&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;GetChangesAll&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="gpos">
+<h3>GPOs<a class="headerlink" href="#gpos" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;Properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;highvalue&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;DEFAULT DOMAIN POLICY@TESTLAB.LOCAL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;objectid&quot;</span><span class="p">:</span> <span class="s2">&quot;BE91688F-1333-45DF-93E4-4D2E8A36DE2B&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;distinguishedname&quot;</span><span class="p">:</span> <span class="s2">&quot;CN={31B2F340-016D-11D2-945F-00C04FB984F9},CN=Policies,CN=System,DC=testlab,DC=local&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s2">&quot;gpcpath&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\\\\</span><span class="s2">testlab.local</span><span class="se">\\</span><span class="s2">sysvol</span><span class="se">\\</span><span class="s2">testlab.local</span><span class="se">\\</span><span class="s2">Policies</span><span class="se">\\</span><span class="s2">{31B2F340-016D-11D2-945F-00C04FB984F9}&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;ObjectIdentifier&quot;</span><span class="p">:</span> <span class="s2">&quot;BE91688F-1333-45DF-93E4-4D2E8A36DE2B&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Aces&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;Owner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteDacl&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteOwner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;GenericWrite&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteDacl&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteOwner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;GenericWrite&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-519&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteDacl&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-519&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteOwner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-519&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;GenericWrite&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="ous">
+<h3>OUs<a class="headerlink" href="#ous" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;Properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;highvalue&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;DOMAIN CONTROLLERS@TESTLAB.LOCAL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;objectid&quot;</span><span class="p">:</span> <span class="s2">&quot;0DE400CD-2FF3-46E0-8A26-2C917B403C65&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;distinguishedname&quot;</span><span class="p">:</span> <span class="s2">&quot;OU=Domain Controllers,DC=testlab,DC=local&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Default container for domain controllers&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;blocksinheritance&quot;</span><span class="p">:</span> <span class="n">false</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;Links&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;IsEnforced&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s2">&quot;Guid&quot;</span><span class="p">:</span> <span class="s2">&quot;F5BDDA03-0183-4F41-93A2-DCA253BE6450&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;ACLProtected&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+  <span class="s2">&quot;Users&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;Computers&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-1001&quot;</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;ChildOus&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;RemoteDesktopUsers&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;LocalAdmins&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;DcomUsers&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;PSRemoteUsers&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;ObjectIdentifier&quot;</span><span class="p">:</span> <span class="s2">&quot;0DE400CD-2FF3-46E0-8A26-2C917B403C65&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Aces&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;Owner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteDacl&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-512&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteOwner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;S-1-5-21-3130019616-2776909439-2417379446-519&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;GenericAll&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">true</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteDacl&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">true</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;PrincipalSID&quot;</span><span class="p">:</span> <span class="s2">&quot;TESTLAB.LOCAL-S-1-5-32-544&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;PrincipalType&quot;</span><span class="p">:</span> <span class="s2">&quot;Group&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;RightName&quot;</span><span class="p">:</span> <span class="s2">&quot;WriteOwner&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;AceType&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;IsInherited&quot;</span><span class="p">:</span> <span class="n">true</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="further-reading.html" class="btn btn-neutral float-left" title="Further Reading/Viewing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2023, Specter Ops Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

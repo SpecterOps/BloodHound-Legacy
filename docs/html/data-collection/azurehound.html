@@ -1,0 +1,241 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="https://bloodhound.specterops.io/collect-data/ce-collection/azurehound" name="canonical" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AzureHound &mdash; BloodHound 4.3.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=232b7ae2" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=0503a316"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="All AzureHound Flags, Explained" href="azurehound-all-flags.html" />
+    <link rel="prev" title="All SharpHound Flags, Explained" href="sharphound-all-flags.html" />
+   
+  
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            BloodHound
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/windows.html">Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/osx.html">macOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/linux.html">Linux</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data Collection</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sharphound.html">SharpHound</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sharphound-all-flags.html">All SharpHound Flags, Explained</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">AzureHound</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#building-azurehound-from-source">Building AzureHound From Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#collecting-data-with-azurehound">Collecting Data with AzureHound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dealing-with-multi-factor-auth-and-conditional-access-policies">Dealing with Multi-Factor Auth and Conditional Access Policies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="azurehound-all-flags.html">All AzureHound Flags, Explained</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bloodhound-py.html">BloodHound.py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data Analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../data-analysis/bloodhound-gui.html">The BloodHound GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-analysis/nodes.html">Nodes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data-analysis/edges.html">Edges</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Further Reading/Viewing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../further-reading/further-reading.html">Further Reading/Viewing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../further-reading/json.html">BloodHound JSON Formats</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BloodHound</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">AzureHound</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/data-collection/azurehound.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="deprecated admonition">
+<p class="admonition-title">Deprecated Documentation</p>
+<p><strong>This documentation refers to deprecated BloodHound Legacy (version 4.3, released in 2023).</strong></p>
+<p>Please use the <a class="reference external" href="https://bloodhound.specterops.io/collect-data/ce-collection/azurehound">current BloodHound CE Documentation</a>.</p>
+</div>
+<section id="azurehound">
+<h1>AzureHound<a class="headerlink" href="#azurehound" title="Link to this heading"></a></h1>
+<p>AzureHound is a Go binary that collects data from AzureAD and AzureRM via the MS Graph
+and Azure REST APIs. It does not use any external dependencies and will run on any
+operating system.</p>
+<section id="building-azurehound-from-source">
+<h2>Building AzureHound From Source<a class="headerlink" href="#building-azurehound-from-source" title="Link to this heading"></a></h2>
+<p>You can build AzureHound from source by cloning this repository:</p>
+<p>Then, cd into the directory you just cloned and type:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">go</span> <span class="n">build</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>This will build AzureHound and you will have a new binary called azurehound
+in this directory.</p>
+</section>
+<section id="collecting-data-with-azurehound">
+<h2>Collecting Data with AzureHound<a class="headerlink" href="#collecting-data-with-azurehound" title="Link to this heading"></a></h2>
+<p>AzureHound supports several authentication flows for collecting information from Azure.
+You can supply a username/password combo, a JWT, a refresh token, a service principal
+secret, or service principal certificate. You can combine these various authentication
+methods with several collection scoping options.</p>
+<p>For example, to authenticate with a username/password and list all groups in a tenant:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">azurehound</span> <span class="o">-</span><span class="n">u</span> <span class="s2">&quot;MattNelson@contoso.onmicrosoft.com&quot;</span> <span class="o">-</span><span class="n">p</span> <span class="s2">&quot;MyVeryStrongPassword&quot;</span> <span class="nb">list</span> <span class="n">groups</span> <span class="o">--</span><span class="n">tenant</span> <span class="s2">&quot;contoso.onmicrosoft.com&quot;</span>
+</pre></div>
+</div>
+<p>AzureHound will authenticate as that user and print all groups in the “Contoso” tenant.</p>
+<p>Or, you may want to supply a JWT and collect all users from the tenant instead. You do not
+need to supply a username or password when supplying a JWT:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">azurehound</span> <span class="o">-</span><span class="n">j</span> <span class="s2">&quot;ey...&quot;</span> <span class="nb">list</span> <span class="n">users</span> <span class="o">--</span><span class="n">tenant</span> <span class="s2">&quot;contoso.onmicrosoft.com&quot;</span>
+</pre></div>
+</div>
+<p>If you’re currently authenticated through the Azure CLI, you can use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">azurehound</span> <span class="o">-</span><span class="n">j</span> <span class="s2">&quot;$(az account get-access-token --resource=https://graph.microsoft.com/ | jq -r .accessToken)&quot;</span> <span class="nb">list</span> <span class="n">users</span> <span class="o">--</span><span class="n">tenant</span> <span class="s2">&quot;contoso.onmicrosoft.com&quot;</span>
+</pre></div>
+</div>
+<p>When collecting data for import into BloodHound, you must use the -o switch to instruct
+AzureHound to output to a file. For example, to list all available data in both AzureAD
+and AzureRM, you can do this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">azurehound</span> <span class="o">-</span><span class="n">u</span> <span class="s2">&quot;MattNelson@contoso.onmicrosoft.com&quot;</span> <span class="o">-</span><span class="n">p</span> <span class="s2">&quot;MyVeryStrongPassword&quot;</span> <span class="nb">list</span> <span class="n">groups</span> <span class="o">--</span><span class="n">tenant</span> <span class="s2">&quot;contoso.onmicrosoft.com&quot;</span> <span class="o">-</span><span class="n">o</span> <span class="n">output</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+</section>
+<section id="dealing-with-multi-factor-auth-and-conditional-access-policies">
+<h2>Dealing with Multi-Factor Auth and Conditional Access Policies<a class="headerlink" href="#dealing-with-multi-factor-auth-and-conditional-access-policies" title="Link to this heading"></a></h2>
+<p>If a user has MFA or CAP restrictions applied to them, you will not be able to authenticate
+with just a username and password with AzureHound. In this situation, you can acquire a
+refresh token for the user and supply the refresh token to AzureHound.</p>
+<p>The most straight-forward way to accomplish this is to use the device code flow. In this
+example I will show you how to perform this flow using PowerShell, but this example can
+be very easiliy ported to any language, as we are simply making calls to Azure APIs.</p>
+<p>Open a PowerShell window on any system and paste the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$body = @{
+    &quot;client_id&quot; =     &quot;1950a258-227b-4e31-a9cf-717495945fc2&quot;
+    &quot;resource&quot; =      &quot;https://graph.microsoft.com&quot;
+}
+$UserAgent = &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36&quot;
+$Headers=@{}
+$Headers[&quot;User-Agent&quot;] = $UserAgent
+$authResponse = Invoke-RestMethod `
+    -UseBasicParsing `
+    -Method Post `
+    -Uri &quot;https://login.microsoftonline.com/common/oauth2/devicecode?api-version=1.0&quot; `
+    -Headers $Headers `
+    -Body $body
+$authResponse
+</pre></div>
+</div>
+<p>The output will contain a user_code and device_code. Now, open a browser where your AzureAD
+user either already logged on or can log on to Azure. In this browser, navigate to
+<a class="reference external" href="https://microsoft.com/devicelogin">https://microsoft.com/devicelogin</a></p>
+<p>Enter the code you generated from the above PowerShell script. Follow the steps in the browser
+to authenticate as the AzureAD user and approve the device code flow request. When done,
+the browser page should display a message similar to “You have signed in to the Microsoft Azure
+PowerShell application on your device. You may now close this window.”</p>
+<p>Now go back to your original PowerShell window and paste this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$body=@{
+    &quot;client_id&quot; =  &quot;1950a258-227b-4e31-a9cf-717495945fc2&quot;
+    &quot;grant_type&quot; = &quot;urn:ietf:params:oauth:grant-type:device_code&quot;
+    &quot;code&quot; =       $authResponse.device_code
+}
+$Tokens = Invoke-RestMethod `
+    -UseBasicParsing `
+    -Method Post `
+    -Uri &quot;https://login.microsoftonline.com/Common/oauth2/token?api-version=1.0&quot; `
+    -Headers $Headers `
+    -Body $body
+$Tokens
+</pre></div>
+</div>
+<p>The output will include several tokens including a refresh_token. It will start with
+characters similar to “0.ARwA6Wg…”. Now you are ready to run AzureHound! Take the refresh
+token and supply it to AzureHound using the -r switch:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">azurehound</span> <span class="o">-</span><span class="n">r</span> <span class="s2">&quot;0.ARwA6Wg...&quot;</span> <span class="nb">list</span> <span class="o">--</span><span class="n">tenant</span> <span class="s2">&quot;contoso.onmicrosoft.com&quot;</span> <span class="o">-</span><span class="n">o</span> <span class="n">output</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>This will attempt to list all possible data from that particular tenant, but you can ALSO
+use that same refresh token to target any other tenant your user has access to!</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sharphound-all-flags.html" class="btn btn-neutral float-left" title="All SharpHound Flags, Explained" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="azurehound-all-flags.html" class="btn btn-neutral float-right" title="All AzureHound Flags, Explained" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2023, Specter Ops Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
