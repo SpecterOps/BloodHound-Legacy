@@ -2,7 +2,7 @@
 
 {% block extrahead %}
   {{ super() }}
-  {% if meta.canonical %}
+  {% if meta is defined and meta.canonical %}
     <link rel="canonical" href="{{ meta.canonical }}" />
   {% endif %}
 {% endblock %}

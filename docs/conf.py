@@ -33,6 +33,7 @@ release = '4.3.1'
 import sphinx_rtd_theme
 extensions = [
     "sphinx_rtd_theme",
+    "sphinx.ext.todo",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -56,6 +57,8 @@ html_context = {
     "canonical_url": "https://bloodhound.specterops.io/"
 }
 
+# Static files path
+html_static_path = ['_static']
 
 # Load custom CSS so that deprecated notice boxes are displayed in red 
 def setup(app):
@@ -65,6 +68,5 @@ def setup(app):
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
 
 master_doc = 'index'

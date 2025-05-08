@@ -1,0 +1,11 @@
+/* Custom style for 'deprecated' admonitions */
+div.admonition.deprecated {
+    border-left: 4px solid #e03e2d;    /* Strong red border */
+    background-color: #ffeaea;         /* Light red background */
+}
+
+/* Title bar styling */
+div.admonition.deprecated .admonition-title {
+    background-color: #e03e2d;
+    color: white;
+}
