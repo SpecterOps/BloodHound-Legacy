@@ -1,9 +1,14 @@
 name: "CLA Assistant"
 on:
   issue_comment:
-    types: [created, edited]
+    types: 
+      - created
+      - edited
   pull_request_target:
-    types: [opened,closed,synchronize]
+    types: 
+      - opened
+      - closed
+      - synchronize
 
 jobs:
   CLAssistant:
