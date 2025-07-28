@@ -1,7 +1,7 @@
 .. admonition:: Deprecated Documentation
    :class: deprecated
 
-   **This documentation refers to deprecated BloodHound Legacy (version 4.3, released in 2023).** 
+   **This documentation refers to deprecated BloodHound Legacy (version 4.3, released in 2023).**
 
    Please use the `current BloodHound CE Documentation <https://bloodhound.specterops.io/>`_.
 
@@ -15,7 +15,7 @@ BloodHound: Six Degrees of Domain Admin
 .. meta::
    description lang=en: Identify and execute attack paths in Active Directory
 
-.. image:: /images/bloodhound-logo.png   
+.. image:: /images/bloodhound-logo.png
    :align: center
    :width: 300px
    :alt: BloodHound logo
@@ -30,12 +30,12 @@ BloodHound to easily gain a deeper understanding of privilege relationships in
 an Active Directory environment.
 
 Install
--------   
+-------
 
 Depending on which operating system you're using, install Neo4j, then
 download the BloodHound GUI. You can also build the BloodHound GUI from source.
 
-OS-specific instructions: 
+OS-specific instructions:
 :doc:`Windows <installation/windows>` |
 :doc:`macOS <installation/osx>` |
 :doc:`Linux <installation/linux>`
@@ -52,7 +52,7 @@ your first dataset is quite simple:
 ::
 
    C:\> SharpHound.exe
-   
+
 Collecting your first data set with AzureHound:
 
 ::
@@ -90,7 +90,7 @@ Have a bug report or feature request? Open an issue on the `BloodHound repo`_
 Need assistance? Join us in the `BloodHound Gang Slack`_
 
 .. _BloodHound repo: https://www.github.com/BloodHoundAD/BloodHound
-.. _BloodHound Gang Slack: https://bloodhoundgang.herokuapp.com
+.. _BloodHound Gang Slack: http://slack.specterops.io/
 
 .. toctree::
    :maxdepth: 2
