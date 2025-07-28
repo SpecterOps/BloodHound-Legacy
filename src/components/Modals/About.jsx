@@ -83,10 +83,10 @@ const About = () => {
                     <a
                         href='#'
                         onClick={() => {
-                            openLink('https://bloodhoundgang.herokuapp.com/');
+                            openLink('http://slack.specterops.io/');
                         }}
                     >
-                        https://bloodhoundgang.herokuapp.com/
+                        http://slack.specterops.io/
                     </a>
                 </h5>
                 <h5>
