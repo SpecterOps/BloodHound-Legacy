@@ -1,7 +1,7 @@
 import React from 'react';
 
 const References = () => {
-    rerturn(
+    return(
         <>
             <a href='https://wald0.com/?p=179'>https://wald0.com/?p=179</a>
             <br />
