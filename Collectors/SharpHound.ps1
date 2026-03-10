@@ -65,7 +65,7 @@ function Invoke-BloodHound
             
     .PARAMETER OutputDirectory
     
-        Folder to output files too
+        Folder to output files to
     
     .PARAMETER OutputPrefix
 
