@@ -75,18 +75,28 @@ const AZAutomationAccountNodeData = () => {
                                     property='See Automation Account within Tenant'
                                     query='MATCH p = (d:AZTenant)-[r:AZContains*1..]->(u:AZAutomationAccount {objectid: $objectid}) RETURN p'
                                 />
-                                <NodeCypherLink
-                                    baseQuery={
-                                        'MATCH p=(:AZAutomationAccount {objectid:$objectid})-[:AZManagedIdentity]->(n)'
+                                <NodeCypherNoNumberLink
+                                    target={objectid}
+                                    property='See Automation Account within Resource group'
+                                    query='MATCH p = (d:AZResourceGroup)-[r:AZContains*1..]->(u:AZAutomationAccount {objectid: $objectid}) RETURN p'
+                                />
+                                <NodeCypherLinkComplex
+                                    countQuery={
+                                        'MATCH p=(:AZAutomationAccount {objectid:$objectid})-[:AZManagedIdentity]->(n) RETURN COUNT(p)'
                                     }
+                                    graphQuery={
+                                        'MATCH p=(:AZAutomationAccount {objectid:$objectid})-[:AZManagedIdentity]->(n) RETURN p'
+                                    }
+                                    start={label}
                                     property={'Managed Identities'}
                                     target={objectid}
+                                    distinct
                                 />
                             </tbody>
                         </Table>
                     </div>
                 </CollapsibleSection>
-
+                
                 <hr></hr>
 
                 <MappedNodeProps
@@ -94,7 +104,7 @@ const AZAutomationAccountNodeData = () => {
                     properties={nodeProps}
                     label={label}
                 />
-
+            
                 <hr></hr>
 
                 <ExtraNodeProps
@@ -102,9 +112,53 @@ const AZAutomationAccountNodeData = () => {
                     properties={nodeProps}
                     label={label}
                 />
-
+                        
                 <hr></hr>
 
+                <CollapsibleSection header='Role Assignments'>
+
+                <hr></hr>
+                                <NodeCypherLinkComplex
+                                    countQuery={
+                                        'MATCH p = (d)-[r:Owner*1..]->(u:AZAutomationAccount {objectid: $objectid}) RETURN COUNT(p)'
+                                    }
+                                    graphQuery={
+                                        'MATCH p = (d)-[r:Owner*1..]->(u:AZAutomationAccount {objectid: $objectid}) RETURN p'
+                                    }
+                                    property={'Automation Account Owners'}
+                                    target={objectid}
+                                />
+                                <NodeCypherLinkComplex
+                                    countQuery={
+                                        'MATCH p = (d)-[r:Contributor*1..]->(u:AZAutomationAccount {objectid: $objectid}) RETURN COUNT(p)'
+                                    }
+                                    graphQuery={
+                                        'MATCH p = (d)-[r:Contributor*1..]->(u:AZAutomationAccount {objectid: $objectid}) RETURN p'
+                                    }
+                                    property={'Automation Account Contributors'}
+                                    target={objectid}
+                                />
+                                <NodeCypherLinkComplex
+                                    countQuery={
+                                        'MATCH p = (d)-[r:UserAccessAdministrator*1..]->(u:AZAutomationAccount {objectid: $objectid}) RETURN COUNT(p)'
+                                    }
+                                    graphQuery={
+                                        'MATCH p = (d)-[r:UserAccessAdministrator*1..]->(u:AZAutomationAccount {objectid: $objectid}) RETURN p'
+                                    }
+                                    property={'User Access Administrators'}
+                                    target={objectid}
+                                />
+                                <NodeCypherLinkComplex
+                                    countQuery={
+                                        'MATCH p = (d)-[r]->(u:AZAutomationAccount {objectid: $objectid}) RETURN COUNT(p)'
+                                    }
+                                    graphQuery={
+                                        'MATCH p = (d)-[r]->(u:AZAutomationAccount {objectid: $objectid}) RETURN p'
+                                    }
+                                    property={'All Relations'}
+                                    target={objectid}
+                                />
+                </CollapsibleSection>
                 <CollapsibleSection header={'INBOUND OBJECT CONTROL'}>
                     <div className={styles.itemlist}>
                         <Table>
@@ -141,7 +195,6 @@ const AZAutomationAccountNodeData = () => {
                         </Table>
                     </div>
                 </CollapsibleSection>
-
             </div>
         </div>
     );
