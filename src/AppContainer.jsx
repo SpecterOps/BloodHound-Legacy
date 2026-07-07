@@ -166,32 +166,9 @@ export default class AppContainer extends Component {
     }
 
     componentDidMount() {
-        document.addEventListener(
-            'dragover',
-            function (event) {
-                event.preventDefault();
-                return false;
-            },
-            false
-        );
+        document.addEventListener('dragover', this._handleDragOver, false);
 
-        document.addEventListener(
-            'drop',
-            function (event) {
-                event.preventDefault();
-                if (
-                    jQuery('#tabcontainer').has(jQuery(event.target)).length ===
-                    1
-                ) {
-                    emitter.emit('imageupload', event);
-                } else {
-                    emitter.emit('filedrop', event);
-                }
-
-                return false;
-            },
-            false
-        );
+        document.addEventListener('drop', this._handleDrop, false);
 
         let { edgeIncluded } = this.state;
 
@@ -201,6 +178,28 @@ export default class AppContainer extends Component {
             }
         }
     }
+
+    componentWillUnmount() {
+        document.removeEventListener('dragover', this._handleDragOver);
+        document.removeEventListener('drop', this._handleDrop);
+    }
+
+    _handleDragOver = (event) => {
+        event.preventDefault();
+        return false;
+    };
+
+    _handleDrop = (event) => {
+        event.preventDefault();
+        if (
+            jQuery('#tabcontainer').has(jQuery(event.target)).length === 1
+        ) {
+            emitter.emit('imageupload', event);
+        } else {
+            emitter.emit('filedrop', event);
+        }
+        return false;
+    };
 
     render() {
         const context = this.state;
